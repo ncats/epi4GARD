@@ -1,0 +1,295 @@
+07/05/2021 07:29:34 PM INFO: Reading notebook gather_all_pubs.ipynb
+07/05/2021 07:29:34 PM ERROR: Notebook JSON is not valid v4: Additional properties are not allowed ('id' was unexpected)
+
+Failed validating 'additionalProperties' in markdown_cell:
+
+On instance['cells'][0]:
+{'cell_type': 'markdown',
+ 'id': '4b9dd59c',
+ 'metadata': {},
+ 'source': 'How many of the 6061 rare diseases tracked by GARD have less '
+           'tha...'}
+07/05/2021 07:29:35 PM INFO: Running cell:
+num_articles = 20 #input("How many abstracts to gather per disease? ")
+
+07/05/2021 07:29:35 PM INFO: Cell returned
+07/05/2021 07:29:35 PM INFO: Running cell:
+#Download any necessary datasets & dependencies, only need to do this once
+#import sys
+#!{sys.executable} -m pip install spacy
+#!{sys.executable} -m spacy download en_core_web_lg
+#!{sys.executable} -m pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.4.0/en_ner_bc5cdr_md-0.4.0.tar.gz
+#!{sys.executable} -m pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.4.0/en_ner_bionlp13cg_md-0.4.0.tar.gz
+#!{sys.executable} -m pip install numpy
+#!{sys.executable} -m pip install pandas
+#!{sys.executable} -m pip install requests
+#!{sys.executable} -m pip install matplotlib
+
+#Installing dependencies for classify_abs.py
+#!{sys.executable} -m pip install tensorflow
+#!{sys.executable} -m pip install nltk
+#import nltk
+#nltk.download('stopwords')
+#nltk.download('punkt')
+
+import numpy as np
+import pandas as pd
+import requests
+import xml.etree.ElementTree as ET
+import spacy
+import time
+import datetime
+from collections import OrderedDict
+import matplotlib.pyplot as plt; plt.rcdefaults()
+
+2021-07-05 19:29:36.049366: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2021-07-05 19:29:36.049391: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+07/05/2021 07:29:37 PM INFO: Cell returned
+07/05/2021 07:29:37 PM INFO: Running cell:
+#Read in GARD diseases
+df = pd.read_csv('GARD.csv')
+df.tail()
+
+07/05/2021 07:29:37 PM INFO: Cell returned
+07/05/2021 07:29:37 PM INFO: Running cell:
+#GARD.csv d.synonyms has oddly saved string data that cannot be converted directly into a list, this converts that
+def str2list(string):
+    string = str(string).replace('[','')
+    string = string.replace(']','')
+    string = string.strip()
+    str_list = string.split(',')
+    for s in str_list:
+        s = s.strip()
+        if s=='nan':
+            str_list.remove('nan')
+    return str_list
+
+07/05/2021 07:29:37 PM INFO: Cell returned
+07/05/2021 07:29:37 PM INFO: Running cell:
+#Convert d.synonym strings into lists
+i=0
+for i in range(len(df['d.synonyms'])):
+    df['d.synonyms'][i] = str2list(df['d.synonyms'][i])
+
+07/05/2021 07:29:37 PM INFO: Cell returned
+07/05/2021 07:29:37 PM INFO: Running cell:
+#Set up a new & easier to use df, with just id and list of names
+df_names = pd.DataFrame(df['d.gard_id'],columns=['d.gard_id','d.names'])
+
+rowlist = []
+i=0
+for i in range(len(df)):
+    columnlist=[]
+    columnlist.append(df['d.name'][i])
+    columnlist+=df['d.synonyms'][i]
+    rowlist.append(columnlist)
+df_names['d.names'] = rowlist
+
+07/05/2021 07:29:37 PM INFO: Cell returned
+07/05/2021 07:29:37 PM INFO: Running cell:
+df_names.tail()
+
+07/05/2021 07:29:37 PM INFO: Cell returned
+07/05/2021 07:29:37 PM INFO: Running cell:
+def get_pmids_abstract(dz_name, maxResults):
+    # get results from searching for disease name through EBI API
+    term = ''
+    dz_words = dz_name.split()
+    for word in dz_words:
+        term += word + '%20'
+    query = term[:-3]
+    url = 'https://www.ebi.ac.uk/europepmc/webservices/rest/search?query='+query+'&resulttype=core'
+    r = requests.get(url)
+    root = ET.fromstring(r.content)
+
+    pmid_abs = {}
+    i = 0
+    # loop over resulting articles
+    for result in root.iter('result'):
+        if i >= maxResults:
+            break
+        pmids = [pmid.text for pmid in result.iter('id')]
+        if len(pmids) > 0:
+            pmid = pmids[0]
+            if pmid[0].isdigit():
+                abstracts = [abstract.text for abstract in result.iter('abstractText')]
+                if len(abstracts) > 0:
+                    pmid_abs[pmid] = abstracts[0]
+                    i += 1
+    return pmid_abs, i
+
+07/05/2021 07:29:37 PM INFO: Cell returned
+07/05/2021 07:29:37 PM INFO: Running cell:
+#Pick all disease names
+all_dz_list = df_names['d.names'].values.tolist()
+
+07/05/2021 07:29:37 PM INFO: Cell returned
+07/05/2021 07:29:37 PM INFO: Running cell:
+#Actually get all of the Pubmed IDs and Articles
+dz_num = {}
+dz_pmid_abs = []
+
+t1 = time.time()
+counter = 0
+for namelist in all_dz_list:
+    i = 0
+    for name in namelist:
+        pmid_abs, abs_returned = get_pmids_abstract(name, num_articles)
+        i+=abs_returned
+        dz_pmid_abs.append(pmid_abs)
+        counter+=1
+        if counter%500==0 and counter>0:
+            print(counter, time.ctime(time.time()))
+        if i>=num_articles:
+            break 
+    dz_num[namelist[0]] = i
+t2 = time.time()
+print('It took '+ str(datetime.timedelta(seconds=(t2-t1)))+' to build dataset of '+str(len(all_dz_list)*num_articles)+' abstracts.')
+print('Completion time is:',time.ctime(t2))
+
+07/05/2021 09:56:11 PM INFO: Cell returned
+07/05/2021 09:56:11 PM INFO: Running cell:
+#Sort the dictionary
+dz_num = dict(sorted(dz_num.items(), key=lambda x: x[1]))
+
+07/05/2021 09:56:11 PM INFO: Cell returned
+07/05/2021 09:56:11 PM INFO: Running cell:
+#Plot the figure
+objects = tuple(dz_num)
+performance = list(dz_num.values())
+#y_pos = np.arange(performance)
+
+fig = plt.figure()
+plt.ylabel('# of Diseases')
+plt.xlabel('# of Articles')
+plt.hist(performance)
+
+plt.show()
+
+07/05/2021 09:56:12 PM INFO: Cell returned
+07/05/2021 09:56:12 PM INFO: Running cell:
+fig.savefig('All_Disease_Hist20.png', dpi=400, bbox_inches='tight')
+
+07/05/2021 09:56:12 PM INFO: Cell returned
+07/05/2021 09:56:12 PM INFO: Running cell:
+df_alldiseases = pd.DataFrame(columns=['disease','pmid', 'abstract'])
+i=0
+j=0
+for namelist in all_dz_list:
+    disease = namelist[0]
+    for k, v in dz_pmid_abs[j].items():
+        pmid = k
+        abstract = v
+        df_alldiseases.loc[i] = [disease]+[pmid]+[abstract]
+        i+=1
+    j+=1
+
+07/05/2021 10:01:58 PM INFO: Cell returned
+07/05/2021 10:01:58 PM INFO: Running cell:
+df_alldiseases
+
+07/05/2021 10:01:58 PM INFO: Cell returned
+07/05/2021 10:01:58 PM INFO: Running cell:
+df_alldiseases.to_csv('all_dz_abstract_set20.csv',index=False)
+
+07/05/2021 10:02:01 PM INFO: Cell returned
+07/05/2021 10:02:01 PM INFO: Saving to gather_all_pubs.ipynb
+07/05/2021 10:02:01 PM INFO: Shutdown kernel
+07/06/2021 06:50:12 PM INFO: Reading notebook all_dz_abstract_EpiClassification.ipynb
+07/06/2021 06:50:13 PM INFO: Running cell:
+#Download any necessary datasets & dependencies, only need to do this once
+#import sys
+#!{sys.executable} -m pip install spacy
+#!{sys.executable} -m spacy download en_core_web_lg
+#!{sys.executable} -m pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.4.0/en_ner_bc5cdr_md-0.4.0.tar.gz
+#!{sys.executable} -m pip install https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.4.0/en_ner_bionlp13cg_md-0.4.0.tar.gz
+#!{sys.executable} -m pip install numpy
+#!{sys.executable} -m pip install pandas
+#!{sys.executable} -m pip install requests
+#!{sys.executable} -m pip install matplotlib
+
+#Installing dependencies for classify_abs.py
+#!{sys.executable} -m pip install tensorflow
+#!{sys.executable} -m pip install nltk
+#import nltk
+#nltk.download('stopwords')
+#nltk.download('punkt')
+
+import numpy as np
+import pandas as pd
+import classify_abs
+import requests
+import xml.etree.ElementTree as ET
+import spacy
+import time
+import datetime
+from collections import OrderedDict
+import matplotlib.pyplot as plt; plt.rcdefaults()
+
+2021-07-06 18:50:14.134354: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2021-07-06 18:50:14.134379: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+07/06/2021 06:50:15 PM INFO: Cell returned
+07/06/2021 06:50:15 PM INFO: Running cell:
+#Load data and classify it as epidemiological
+df = pd.read_csv('all_dz_abstract_set20.csv')
+
+07/06/2021 06:50:16 PM INFO: Cell returned
+07/06/2021 06:50:16 PM INFO: Running cell:
+df.tail()
+
+07/06/2021 06:50:16 PM INFO: Cell returned
+07/06/2021 06:50:16 PM INFO: Running cell:
+#Load spacy models for epi predictions
+nlp = spacy.load('en_core_web_lg')
+nlpSci = spacy.load("en_ner_bc5cdr_md")
+nlpSci2 = spacy.load('en_ner_bionlp13cg_md')
+
+def epiPredictions(abstract, nlp, nlpSci, nlpSci2):
+    # predict on each abstract
+    prob, isEpi = classify_abs.getAbstractPredictions(abstract, nlp, nlpSci, nlpSci2, 'my_model_orphanet_final')
+    return prob, isEpi 
+
+07/06/2021 06:50:32 PM INFO: Cell returned
+07/06/2021 06:50:32 PM INFO: Running cell:
+epiprob = []
+epibool = []
+for row in df.iterrows():
+    type(row[1][2])
+    prob, boolean = epiPredictions(row[1][2], nlp, nlpSci, nlpSci2)
+    epiprob.append(prob)
+    epibool.append(boolean)
+
+2021-07-06 18:50:32.286347: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcuda.so.1'; dlerror: libcuda.so.1: cannot open shared object file: No such file or directory
+2021-07-06 18:50:32.286374: W tensorflow/stream_executor/cuda/cuda_driver.cc:326] failed call to cuInit: UNKNOWN ERROR (303)
+2021-07-06 18:50:32.286391: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (pubmed.ncats.io): /proc/driver/nvidia/version does not exist
+2021-07-06 18:50:32.286570: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-07-06 18:50:39.675604: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:176] None of the MLIR Optimization Passes are enabled (registered 2)
+2021-07-06 18:50:39.697044: I tensorflow/core/platform/profile_utils/cpu_utils.cc:114] CPU Frequency: 2499995000 Hz
+07/14/2021 05:28:30 AM INFO: Cell raised uncaught exception: 
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m/tmp/ipykernel_27718/3378399849.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      3[0m [0;32mfor[0m [0mrow[0m [0;32min[0m [0mdf[0m[0;34m.[0m[0miterrows[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m     [0mtype[0m[0;34m([0m[0mrow[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[[0m[0;36m2[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 5[0;31m     [0mprob[0m[0;34m,[0m [0mboolean[0m [0;34m=[0m [0mepiPredictions[0m[0;34m([0m[0mrow[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[[0m[0;36m2[0m[0;34m][0m[0;34m,[0m [0mnlp[0m[0;34m,[0m [0mnlpSci[0m[0;34m,[0m [0mnlpSci2[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      6[0m     [0mepiprob[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mprob[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m     [0mepibool[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mboolean[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/tmp/ipykernel_27718/2140984682.py[0m in [0;36mepiPredictions[0;34m(abstract, nlp, nlpSci, nlpSci2)[0m
+[1;32m      6[0m [0;32mdef[0m [0mepiPredictions[0m[0;34m([0m[0mabstract[0m[0;34m,[0m [0mnlp[0m[0;34m,[0m [0mnlpSci[0m[0;34m,[0m [0mnlpSci2[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m     [0;31m# predict on each abstract[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 8[0;31m     [0mprob[0m[0;34m,[0m [0misEpi[0m [0;34m=[0m [0mclassify_abs[0m[0;34m.[0m[0mgetAbstractPredictions[0m[0;34m([0m[0mabstract[0m[0;34m,[0m [0mnlp[0m[0;34m,[0m [0mnlpSci[0m[0;34m,[0m [0mnlpSci2[0m[0;34m,[0m [0;34m'my_model_orphanet_final'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      9[0m     [0;32mreturn[0m [0mprob[0m[0;34m,[0m [0misEpi[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/classify_abs.py[0m in [0;36mgetAbstractPredictions[0;34m(abstract, nlp, nlpSci, nlpSci2, model)[0m
+[1;32m    103[0m [0;34m[0m[0m
+[1;32m    104[0m     [0;32mif[0m[0;34m([0m[0mlen[0m[0;34m([0m[0mabstract[0m[0;34m)[0m[0;34m<[0m[0;36m5[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 105[0;31m         [0mabstract[0m [0;34m=[0m [0mget_abstract[0m[0;34m([0m[0mpmid[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    106[0m [0;34m[0m[0m
+[1;32m    107[0m     [0;31m# load the tokenizer[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mNameError[0m: name 'pmid' is not defined
+07/14/2021 05:28:30 AM INFO: Saving to all_dz_abstract_EpiClassification.ipynb
+07/14/2021 05:28:30 AM INFO: Shutdown kernel
+07/14/2021 05:28:30 AM WARNING: Exiting with nonzero exit status
