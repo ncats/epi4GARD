@@ -1,0 +1,112 @@
+2021-07-20 21:58:54,612 INFO    MainThread:4193 [wandb_setup.py:_flush():69] setting env: {}
+2021-07-20 21:58:54,612 INFO    MainThread:4193 [wandb_setup.py:_flush():69] setting login settings: {}
+2021-07-20 21:58:54,612 INFO    MainThread:4193 [wandb_init.py:_log_setup():337] Logging user logs to /work/wzkariampuzha/biobert-pytorch/named-entity-recognition/wandb/run-20210720_215854-3av86x0a/logs/debug.log
+2021-07-20 21:58:54,612 INFO    MainThread:4193 [wandb_init.py:_log_setup():338] Logging internal logs to /work/wzkariampuzha/biobert-pytorch/named-entity-recognition/wandb/run-20210720_215854-3av86x0a/logs/debug-internal.log
+2021-07-20 21:58:54,612 INFO    MainThread:4193 [wandb_init.py:init():370] calling init triggers
+2021-07-20 21:58:54,613 INFO    MainThread:4193 [wandb_init.py:init():375] wandb.init called with sweep_config: {}
+config: {}
+2021-07-20 21:58:54,613 INFO    MainThread:4193 [wandb_init.py:init():419] starting backend
+2021-07-20 21:58:54,613 INFO    MainThread:4193 [backend.py:_multiprocessing_setup():70] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2021-07-20 21:58:54,642 INFO    MainThread:4193 [backend.py:ensure_launched():135] starting backend process...
+2021-07-20 21:58:54,671 INFO    MainThread:4193 [backend.py:ensure_launched():139] started backend process with pid: 4323
+2021-07-20 21:58:54,672 INFO    MainThread:4193 [wandb_init.py:init():424] backend started and connected
+2021-07-20 21:58:54,674 INFO    MainThread:4193 [wandb_init.py:init():472] updated telemetry
+2021-07-20 21:58:54,674 INFO    MainThread:4193 [wandb_init.py:init():491] communicating current version
+2021-07-20 21:58:55,197 INFO    MainThread:4193 [wandb_init.py:init():496] got version response 
+2021-07-20 21:58:55,197 INFO    MainThread:4193 [wandb_init.py:init():504] communicating run to backend with 30 second timeout
+2021-07-20 21:58:55,278 INFO    MainThread:4193 [wandb_init.py:init():529] starting run threads in backend
+2021-07-20 21:58:56,279 INFO    MainThread:4193 [wandb_run.py:_console_start():1623] atexit reg
+2021-07-20 21:58:56,279 INFO    MainThread:4193 [wandb_run.py:_redirect():1497] redirect: SettingsConsole.REDIRECT
+2021-07-20 21:58:56,280 INFO    MainThread:4193 [wandb_run.py:_redirect():1502] Redirecting console.
+2021-07-20 21:58:56,281 INFO    MainThread:4193 [wandb_run.py:_redirect():1558] Redirects installed.
+2021-07-20 21:58:56,281 INFO    MainThread:4193 [wandb_init.py:init():554] run started, returning control to user process
+2021-07-20 21:58:56,282 INFO    MainThread:4193 [wandb_run.py:_config_callback():872] config_cb None None {'return_dict': True, 'output_hidden_states': False, 'output_attentions': False, 'torchscript': False, 'use_bfloat16': False, 'pruned_heads': {}, 'tie_word_embeddings': True, 'is_encoder_decoder': False, 'is_decoder': False, 'add_cross_attention': False, 'tie_encoder_decoder': False, 'max_length': 20, 'min_length': 0, 'do_sample': False, 'early_stopping': False, 'num_beams': 1, 'num_beam_groups': 1, 'diversity_penalty': 0.0, 'temperature': 1.0, 'top_k': 50, 'top_p': 1.0, 'repetition_penalty': 1.0, 'length_penalty': 1.0, 'no_repeat_ngram_size': 0, 'encoder_no_repeat_ngram_size': 0, 'bad_words_ids': None, 'num_return_sequences': 1, 'chunk_size_feed_forward': 0, 'output_scores': False, 'return_dict_in_generate': False, 'forced_bos_token_id': None, 'forced_eos_token_id': None, 'remove_invalid_values': False, 'architectures': None, 'finetuning_task': None, 'id2label': {0: 'B-bio', 1: 'I-bio', 2: 'O'}, 'label2id': {'B-bio': 0, 'I-bio': 1, 'O': 2}, 'tokenizer_class': None, 'prefix': None, 'bos_token_id': None, 'pad_token_id': 0, 'eos_token_id': None, 'sep_token_id': None, 'decoder_start_token_id': None, 'task_specific_params': None, 'problem_type': None, '_name_or_path': 'dmis-lab/biobert-large-cased-v1.1', 'transformers_version': '4.8.2', 'vocab_size': 58996, 'hidden_size': 1024, 'num_hidden_layers': 24, 'num_attention_heads': 16, 'hidden_act': 'gelu', 'intermediate_size': 4096, 'hidden_dropout_prob': 0.1, 'attention_probs_dropout_prob': 0.1, 'max_position_embeddings': 512, 'type_vocab_size': 2, 'initializer_range': 0.02, 'layer_norm_eps': 1e-12, 'gradient_checkpointing': False, 'position_embedding_type': 'absolute', 'use_cache': True, 'model_type': 'bert', 'output_dir': './output/Location', 'overwrite_output_dir': True, 'do_train': True, 'do_eval': True, 'do_predict': True, 'evaluation_strategy': 'no', 'prediction_loss_only': False, 'per_device_train_batch_size': 32, 'per_device_eval_batch_size': 8, 'per_gpu_train_batch_size': 'None', 'per_gpu_eval_batch_size': 'None', 'gradient_accumulation_steps': 1, 'eval_accumulation_steps': 'None', 'learning_rate': 5e-05, 'weight_decay': 0.0, 'adam_beta1': 0.9, 'adam_beta2': 0.999, 'adam_epsilon': 1e-08, 'max_grad_norm': 1.0, 'num_train_epochs': 50.0, 'max_steps': -1, 'lr_scheduler_type': 'linear', 'warmup_ratio': 0.0, 'warmup_steps': 0, 'log_level': -1, 'log_level_replica': -1, 'log_on_each_node': True, 'logging_dir': './output/Location/runs/Jul20_21-58-48_pubmed.ncats.io', 'logging_strategy': 'steps', 'logging_first_step': False, 'logging_steps': 500, 'save_strategy': 'steps', 'save_steps': 250, 'save_total_limit': 'None', 'save_on_each_node': False, 'no_cuda': False, 'seed': 1, 'fp16': False, 'fp16_opt_level': 'O1', 'fp16_backend': 'auto', 'fp16_full_eval': False, 'local_rank': -1, 'tpu_num_cores': 'None', 'tpu_metrics_debug': False, 'debug': '[]', 'dataloader_drop_last': False, 'eval_steps': 500, 'dataloader_num_workers': 0, 'past_index': -1, 'run_name': './output/Location', 'disable_tqdm': False, 'remove_unused_columns': True, 'label_names': 'None', 'load_best_model_at_end': False, 'metric_for_best_model': 'None', 'greater_is_better': 'None', 'ignore_data_skip': False, 'sharded_ddp': '[]', 'deepspeed': 'None', 'label_smoothing_factor': 0.0, 'adafactor': False, 'group_by_length': False, 'length_column_name': 'length', 'report_to': "['tensorboard', 'wandb']", 'ddp_find_unused_parameters': 'None', 'dataloader_pin_memory': True, 'skip_memory_metrics': True, 'use_legacy_prediction_loop': False, 'push_to_hub': False, 'resume_from_checkpoint': 'None', 'push_to_hub_model_id': 'Location', 'push_to_hub_organization': 'None', 'push_to_hub_token': 'None', '_n_gpu': 0, 'mp_parameters': '', 'train_batch_size': 32, 'eval_batch_size': 8}
+2021-07-20 21:58:56,285 INFO    MainThread:4193 [wandb_watch.py:watch():43] Watching
+2021-07-20 23:27:25,781 INFO    MainThread:4193 [wandb_run.py:_atexit_cleanup():1593] got exitcode: 0
+2021-07-20 23:27:25,782 INFO    MainThread:4193 [wandb_run.py:_restore():1565] restore
+2021-07-20 23:27:28,072 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 1
+}
+pusher_stats {
+  uploaded_bytes: 1270
+  total_bytes: 1270
+}
+
+2021-07-20 23:27:28,627 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 1
+}
+pusher_stats {
+  uploaded_bytes: 1270
+  total_bytes: 1270
+}
+
+2021-07-20 23:27:28,951 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 1270
+  total_bytes: 933147
+}
+
+2021-07-20 23:27:29,053 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 115958
+  total_bytes: 933147
+}
+
+2021-07-20 23:27:29,155 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 933147
+  total_bytes: 933147
+}
+
+2021-07-20 23:27:29,256 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 933147
+  total_bytes: 933147
+}
+
+2021-07-20 23:27:29,358 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 933147
+  total_bytes: 933147
+}
+
+2021-07-20 23:27:29,460 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 933147
+  total_bytes: 933147
+}
+
+2021-07-20 23:27:30,149 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 933147
+  total_bytes: 933147
+}
+
+2021-07-20 23:27:30,251 INFO    MainThread:4193 [wandb_run.py:_wait_for_finish():1715] got exit ret: done: true
+exit_result {
+}
+file_counts {
+  wandb_count: 5
+}
+pusher_stats {
+  uploaded_bytes: 933147
+  total_bytes: 933147
+}
+
+2021-07-20 23:27:31,484 INFO    MainThread:4193 [wandb_run.py:_show_summary():1870] rendering summary
+2021-07-20 23:27:31,485 INFO    MainThread:4193 [wandb_run.py:_show_history():1908] rendering history
+2021-07-20 23:27:31,485 INFO    MainThread:4193 [wandb_run.py:_show_files():1937] logging synced files
