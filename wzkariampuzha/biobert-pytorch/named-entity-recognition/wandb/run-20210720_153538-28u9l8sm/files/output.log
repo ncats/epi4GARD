@@ -1,0 +1,159 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 67%|██████████████████████████████████████████████████████                           | 100/150 [05:24<02:46,  3.34s/it]Saving model checkpoint to ./output/Location/checkpoint-100
+Configuration saved in ./output/Location/checkpoint-100/config.json
+Model weights saved in ./output/Location/checkpoint-100/pytorch_model.bin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 99%|████████████████████████████████████████████████████████████████████████████████▍| 149/150 [08:01<00:03,  3.31s/it]
+100%|█████████████████████████████████████████████████████████████████████████████████| 150/150 [08:02<00:00,  2.68s/it]
+Training completed. Do not forget to share your model on huggingface.co/models =)
+100%|█████████████████████████████████████████████████████████████████████████████████| 150/150 [08:02<00:00,  3.22s/it]
+Saving model checkpoint to ./output/Location
+Configuration saved in ./output/Location/config.json
+Model weights saved in ./output/Location/pytorch_model.bin
+Traceback (most recent call last):
+  File "run_ner.py", line 328, in <module>
+    main()
+  File "run_ner.py", line 249, in main
+    if trainer.is_world_master():
+AttributeError: 'Trainer' object has no attribute 'is_world_master'

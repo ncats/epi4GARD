@@ -1,0 +1,48 @@
+
+
+
+
+
+
+
+
+
+
+ 67%|███████████████████████████████████████████████████████▎                           | 10/15 [01:37<00:46,  9.26s/it]Saving model checkpoint to ./output/Location/checkpoint-10
+Configuration saved in ./output/Location/checkpoint-10/config.json
+Model weights saved in ./output/Location/checkpoint-10/pytorch_model.bin
+
+
+
+ 93%|█████████████████████████████████████████████████████████████████████████████▍     | 14/15 [02:17<00:09,  9.52s/it]
+100%|███████████████████████████████████████████████████████████████████████████████████| 15/15 [02:20<00:00,  7.67s/it]
+Training completed. Do not forget to share your model on huggingface.co/models =)
+100%|███████████████████████████████████████████████████████████████████████████████████| 15/15 [02:20<00:00,  9.38s/it]
+Saving model checkpoint to ./output/Location
+Configuration saved in ./output/Location/config.json
+Model weights saved in ./output/Location/pytorch_model.bin
+tokenizer config file saved in ./output/Location/tokenizer_config.json
+Special tokens file saved in ./output/Location/special_tokens_map.json
+07/20/2021 20:32:15 - INFO - __main__ -   *** Evaluate ***
+***** Running Evaluation *****
+  Num examples = 0
+  Batch size = 8
+07/20/2021 20:32:15 - INFO - __main__ -   ***** Eval results *****
+07/20/2021 20:32:15 - INFO - __main__ -     eval_runtime = 0.0017
+07/20/2021 20:32:15 - INFO - __main__ -     eval_samples_per_second = 0.0
+07/20/2021 20:32:15 - INFO - __main__ -     eval_steps_per_second = 0.0
+07/20/2021 20:32:15 - INFO - __main__ -     epoch = 1.0
+07/20/2021 20:32:15 - INFO - filelock -   Lock 140432481750944 acquired on ../datasets/NER/Location/cached_test_BertTokenizer_192.lock
+07/20/2021 20:32:15 - INFO - utils_ner -   Loading features from cached file ../datasets/NER/Location/cached_test_BertTokenizer_192
+07/20/2021 20:32:15 - INFO - filelock -   Lock 140432481750944 released on ../datasets/NER/Location/cached_test_BertTokenizer_192.lock
+***** Running Prediction *****
+  Num examples = 0
+  Batch size = 8
+Traceback (most recent call last):
+  File "run_ner.py", line 328, in <module>
+    main()
+  File "run_ner.py", line 283, in main
+    preds_list, _ = align_predictions(predictions, label_ids)
+  File "run_ner.py", line 210, in align_predictions
+    batch_size, seq_len = preds.shape
+ValueError: not enough values to unpack (expected 2, got 0)

@@ -1,0 +1,42 @@
+
+
+
+
+
+
+
+
+
+
+ 83%|█████████████████████████████████████████████████████████████████████▏             | 10/12 [01:37<00:18,  9.30s/it]Saving model checkpoint to ./output/Location/checkpoint-10
+Configuration saved in ./output/Location/checkpoint-10/config.json
+Model weights saved in ./output/Location/checkpoint-10/pytorch_model.bin
+ 92%|████████████████████████████████████████████████████████████████████████████       | 11/12 [01:51<00:10, 10.55s/it]
+100%|███████████████████████████████████████████████████████████████████████████████████| 12/12 [01:56<00:00,  8.96s/it]
+Training completed. Do not forget to share your model on huggingface.co/models =)
+100%|███████████████████████████████████████████████████████████████████████████████████| 12/12 [01:56<00:00,  9.72s/it]
+Saving model checkpoint to ./output/Location
+Configuration saved in ./output/Location/config.json
+Model weights saved in ./output/Location/pytorch_model.bin
+tokenizer config file saved in ./output/Location/tokenizer_config.json
+Special tokens file saved in ./output/Location/special_tokens_map.json
+07/20/2021 20:56:11 - INFO - __main__ -   *** Evaluate ***
+***** Running Evaluation *****
+  Num examples = 89
+  Batch size = 8
+
+
+100%|███████████████████████████████████████████████████████████████████████████████████| 12/12 [00:05<00:00,  2.21it/s]Traceback (most recent call last):
+  File "run_ner.py", line 328, in <module>
+    main()
+  File "run_ner.py", line 257, in main
+    result = trainer.evaluate()
+  File "/work/wzkariampuzha/env/lib/python3.8/site-packages/transformers/trainer.py", line 2024, in evaluate
+    output = eval_loop(
+  File "/work/wzkariampuzha/env/lib/python3.8/site-packages/transformers/trainer.py", line 2260, in evaluation_loop
+    metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
+  File "run_ner.py", line 224, in compute_metrics
+    preds_list, out_label_list = align_predictions(p.predictions, p.label_ids)
+  File "run_ner.py", line 210, in align_predictions
+    batch_size, seq_len = preds.shape
+ValueError: not enough values to unpack (expected 2, got 0)
