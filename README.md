@@ -1,5 +1,8 @@
 # epi4GARD
 
+This project is an alert system for the NIH Genetic and Rare Diseases Information Center (GARD). The purpose of this system is to automatically identify rare disease articles as epidemiological, and if so, extract the epidemiological information from them. It is currently composed of two components:
+ - A long short-term memory recurrent neural network that classifies rare disease publications as epidemiological or not (created by Jennifer John)
+ - A bidirectional transformer-based model that performs named entity recognition to identify epidemiological information from abstracts classified as epidemiological. 
 ### Key notebooks
 - *Prepare positive dataset.ipynb*: Generates *orphanet_epi_mesh.csv*, the final positive dataset (articles that are all epidemiology studies). First, PubMed IDs are extracted from a collection of epidemiology sources provided by Orphanet. The final positive set consists of the PubMed IDs that have epidemiology, incidence, or prevalence MeSH terms. The notebook includes code to optionally expand the dataset by including articles with epidemiology-related MeSH terms beyond those included in the Orphanet file, although this was shown to have worse performance.
 - *Prepare negative dataset.ipynb*: Generates *negative_dataset.csv*, the final negative dataset (articles that are not epidemiology studies). Using the EBI API, the top 5 PubMed search results for each of the 6,000+ rare diseases included in the GARD database are retrieved. Articles that have epidemiology MeSH terms or keywords in the abstract or that are also in the Orphanet file are removed.
