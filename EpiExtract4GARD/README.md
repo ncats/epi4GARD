@@ -15,7 +15,7 @@ This is the bidirectional NER system (multi-type token classification)
 - *whole_abstract_set.csv*: Contains 7699 unique abstracts (9284 total) that were returned from the EBI API call.
 - *positive_abstract_set.csv*: Contains 620 unique abstracts (755 total) that were classified as epidemiological from the *whole_abstract_set.csv*
 - *train.tsv*: Contains 620 unique abstracts (755 total) that were classified as epidemiological from the *whole_abstract_set.csv*
-- *en_product9_prev.xml*: Contains the [Orphanet](http://www.orphadata.org/cgi-bin/epidemio.html) Data for the Case Study Comparison
+- *en_product9_prev.xml*: Contains the [Orphanet Data](http://www.orphadata.org/cgi-bin/epidemio.html) for the Case Study Comparison
 - Use ```curl "http://www.orphadata.org/data/xml/en_product9_prev.xml" -o en_product9_prev.xml``` to download the file in the correct repository
 ### Folders
 - *datasets*: Contains EpiCustomV2 dataset and Large_DatasetV2 which was the combined 
