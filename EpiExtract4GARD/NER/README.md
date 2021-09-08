@@ -1,4 +1,5 @@
-# EpiExtract4GARD
+# Named Entity Recognition
+This code was adapted from the [Pytorch implementation of BioBERT](https://github.com/dmis-lab/biobert-pytorch) created by DMIS Lab
 Trained like 
 
 To train an NER model with BioBERT-v1.1 (base), run the command below.
