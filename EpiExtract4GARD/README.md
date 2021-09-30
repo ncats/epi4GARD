@@ -1,4 +1,6 @@
 # EpiExtract4GARD
+# DOCUMENTATION PENDING
+
 This notebook contains the code to train BioBERT for named entity recognition of 
 This is based on the PyTorch implementation of 
 DMIS Lab
