@@ -1,9 +1,9 @@
 # Named Entity Recognition
-This code was adapted from the [Pytorch implementation of BioBERT](https://github.com/dmis-lab/biobert-pytorch) created by DMIS Lab
-Trained like 
+This code was adapted from the [Pytorch implementation of BioBERT](https://github.com/dmis-lab/biobert-pytorch) created by DMIS Lab. Every file except *preprocess.py* was modified. 
+
+Before training, please run `./preprocess.sh` to preprocess the datasets downloaded in `biobert-pytorch` (see [here](https://github.com/jhyuklee/biobert-pytorch)).
 
 To train an NER model with BioBERT-v1.1 (base), run the command below.
-Before training, please run `./preprocess.sh` to preprocess the datasets downloaded in `biobert-pytorch` (see [here](https://github.com/jhyuklee/biobert-pytorch)).
 
 ## Sample Training Commands
 ```bash
@@ -36,21 +36,9 @@ python3 run_ner.py \
     --do_eval \
     --do_predict \
     --overwrite_output_dir
-
-export SAVE_DIR=./outputCSTM5
-export DATA_DIR=../datasets
-export MAX_LENGTH=192
-export SAVE_STEPS=1500
-export SEED=1
-export ENTITY=EpiCustomV2
-export NUM_EPOCHS=30
-export LEARNING_RATE=5e-5
-export WEIGHT_DECAY=0.01
-export BATCH_SIZE=16
-export EPSILON=1e-8
 ```
 
-## Evaluation Results
+## V2 Evaluation Results
 
 | Test #      | Dataset  | epochs | learning rate | weight decay | batch size | adam epsilon | loss     | precision | recall   | F1       |
 | ----------- | :------: | ------ | ------------- | ------------ | ---------- | ------------ | -------- | --------- | -------- | -------- |
