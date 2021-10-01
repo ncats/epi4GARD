@@ -2,7 +2,7 @@
 # DOCUMENTATION PENDING
 This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature. The pipeline includes disease identification via dictionary look-up and identification of locations, epidemiological identifiers (e.g. "prevalence", "annual incidence", "estimated occurrence") and epidemiological rates (e.g. "1.7 per 1,000,000 live births" or 2.1:34,492) via BioBERT fine-tuned for named entity recognition (multi-type token classification). 
 
-To see how it integrates with the entire epi4GARD alert system [click here](https://github.com/ncats/epi4GARD#epi4gard).
+The final model is freely available to use on [Hugging Face](https://huggingface.co/ncats/EpiExtract4GARD). To see how it integrates with the entire epi4GARD alert system [click here](https://github.com/ncats/epi4GARD#epi4gard). 
 
 ## Bi-Directional Transformer-based NER
 ### Key notebooks
@@ -10,14 +10,14 @@ To see how it integrates with the entire epi4GARD alert system [click here](http
 - *create_labeled_dataset_V2.ipynb*: Uses [spaCy NER](https://spacy.io/usage/linguistic-features#named-entities) and rules I created iteratively to auto-label the dataset. Generates *epi_{train,val,test}_setV2.tsv* files
 - *modify_existing_labels.ipynb*: Generated new rules for labeling that improved the V2 set to create V3.2 set. Input: *epi_{train, val, test}_setV2.tsv* files Output: *epi_{train, val, test}_setV3.tsv* files
 - *compile_datasets.ipynb*: Combines the [CoNLL++ dataset](https://github.com/huggingface/datasets/tree/master/datasets/conllpp) with *epi_train_setV3.tsv* to generate *training_setV3.tsv*. Also contains code to combine other datasets and train the models in notebook (did not work effectively) which were ultimately not used in this study.
--*Case Study.ipynb*:
-- *Find efficacy of test predictions.ipynb*: Contains the code to compare two datasets at the token- and entity-levels. Use to compare the unmodified 
+-*Case Study.ipynb*: Demonstrates the ability of the pipeline to search by disease
+- *Find efficacy of test predictions.ipynb*: Contains the code to compare two datasets at the token- and entity-levels. Used to compare the unmodified test set to the manually validated test set (finds efficacy of programmatic labeling) and the model's test predictions to the manually validated test set (finds out results for each entity class).
 - *Orphanet_Comparison_Final.ipynb*:
 
 ### Key Python Files
-- *extract_abs.py*:
+- *extract_abs.py*: 
 
-- *classify_abs.py*: 
+- *classify_abs.py*:  
 
 ### Data files
 - *GARD.csv*: Contains the names and synonyms of all GARD diseases generated from a [neo4j knowledge graph](https://pubmed.ncbi.nlm.nih.gov/33183351/). *NOTE*: Contains errors due to the substitution of semicolons for commas to separate synonym names. Was utilized in *gather_pubs_per_disease.ipynb* and originally in *extract_abs.py* for disease identification, but that function is deprecated. Utilize *gard-id-name-synonyms.json* in future.
