@@ -1,6 +1,6 @@
 # EpiExtract4GARD
 # DOCUMENTATION PENDING
-This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature. The pipeline includes disease identification via dictionary look-up and identification of locations, epidemiological identifiers (e.g. "prevalence", "annual incidence", "estimated occurrence") and epidemiological rates (e.g. "1.7 per 1,000,000 live births" or 2.1:34,492) via BioBERT fine-tuned for named entity recognition (multi-type token classification). 
+This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature. The pipeline includes disease identification via dictionary look-up and identification of locations, epidemiological identifiers (e.g. "prevalence", "annual incidence", "estimated occurrence") and epidemiological rates (e.g. "1.7 per 1,000,000 live births", "2.1:1.000.000", "one in five million", "0.03%") via BioBERT fine-tuned for named entity recognition (multi-type token classification). 
 
 The final model is freely available to use on [Hugging Face](https://huggingface.co/ncats/EpiExtract4GARD). To see how it integrates with the entire epi4GARD alert system [click here](https://github.com/ncats/epi4GARD#epi4gard). 
 
@@ -20,7 +20,7 @@ The final model is freely available to use on [Hugging Face](https://huggingface
   - _init_NER_pipeline()_: Outputs a [huggingface tranformers pipeline variable](https://huggingface.co/transformers/main_classes/pipelines.html)
   - _get_diseases(sentence, GARD_dict, max_length)_: Checks every possible string combination in a sentence against the *GARD_dict* to find matches. Runs with time complexity O(*n*)
   - _autosearch(searchterm, GARD_dict)_: Allows searching by GARD ID(i.e. lemma) or any form of a disease name. Matches form to lemma and outputs a list of all other disease forms (synonyms)
-  - _search_term_extraction(search_term, ...)_: Input search term and outputs a list of all related epidemiological articles with relevant information extracted from the text. See *Case Study.ipynb* for demo.
+  - _search_term_extraction(search_term, model_variables)_: Input search term and the variables of both the transformer and LSTM RNN models and outputs a list of all related epidemiological abstracts with relevant information extracted from the text. See *Case Study.ipynb* for demo.
 - *classify_abs.py*: Optimized and added to [the original](https://github.com/ncats/epi4GARD#python-files). Some key functions:
   - _init_classify_model()_: Returns all of the variables needed for the LSTM RNN classification model. 
   - _search_getAbs(searchterm_list, maxResults)_: Allows one to search EBI and PubMed APIs for a search term(type = str) or a list of search terms. Returns a dictionary of {PMID : title+abstract}.
@@ -28,7 +28,7 @@ The final model is freely available to use on [Hugging Face](https://huggingface
 ### Data files
 - *GARD.csv*: Contains the names and synonyms of all GARD diseases generated from a [neo4j knowledge graph](https://pubmed.ncbi.nlm.nih.gov/33183351/). *NOTE*: Contains errors due to the substitution of semicolons for commas to separate synonym names. Was utilized in *gather_pubs_per_disease.ipynb* and originally in *extract_abs.py* for disease identification, but that function is deprecated. Utilize *gard-id-name-synonyms.json* in future.
 - *positive_abstract_set.csv*: Contains 620 unique abstracts (755 total) that were classified as epidemiological from the *whole_abstract_set.csv*
-- *epi_{train,val,test}_setV3.tsv* files: These are the V3 training, validation, and programmatically generated test sets. The training set was copied to '''datasets/EpiCustomV3''' and renamed *train.tsv*. The validation set was copied to ```datasets/EpiCustomV3``` and ```datasets/Large_DatasetV3``` and renamed *val.tsv*. The V3 test set (uncorrected) is important as it is used by *Find efficacy of test predictions.ipynb* to find the efficacy of the programmatic labeling, but was otherwise not used with the model. 
+- *epi_{train,val,test}_setV3.tsv* files: These are the V3 training, validation, and programmatically generated test sets. The training set was copied to ```datasets/EpiCustomV3``` and renamed *train.tsv*. The validation set was copied to ```datasets/EpiCustomV3``` and ```datasets/Large_DatasetV3``` and renamed *val.tsv*. The V3 test set (uncorrected) is important as it is used by *Find efficacy of test predictions.ipynb* to find the efficacy of the programmatic labeling, but was otherwise not used with the model. 
 - *epi_test_setV2-corrected.tsv*: The manually validated test set (i.e. text with ground truth labels). Validation was completed by all four authors, which includes a rare disease expert, after V2 so there is no *epi_test_setV3-corrected*. This set was copied to ```datasets/EpiCustomV3``` and ```datasets/Large_DatasetV3``` and renamed *test.tsv*
 - *training_setV3.tsv*: Generated from *compile_datasets.ipynb*. It was copied to ```datasets/Large_DatasetV3``` and renamed *train.tsv*
 - *en_product9_prev.xml*: Contains the [Orphanet Data](http://www.orphadata.org/cgi-bin/epidemio.html) for the Case Study Comparison. This document was downloaded on August 31, 2021. ValMoy is epidemiologic rate per 100,000 persons. See [Orphanet's documentation](https://www.orpha.net/orphacom/cahiers/docs/GB/Epidemiology_in_Orphanet_R1_Ann_Epi_EP_05.pdf).
@@ -36,7 +36,7 @@ The final model is freely available to use on [Hugging Face](https://huggingface
 - *gard-id-name-synonyms.json*: Contains the names and synonyms of all GARD diseases generated from a [neo4j knowledge graph](https://pubmed.ncbi.nlm.nih.gov/33183351/). Utilized in *extract_abs.py* for disease identification. 
 - *Orphanet-Comparison-FINAL.csv*: Contains the output of a large scale comparison to the Orphanet rare disease epidemiology database.
 ### Key Folders
-- *datasets*: Contains EpiCustomV2, Large_DatasetV2, EpiCustomV3, Large_DatasetV3 datasets for training the model. 
+- *datasets*: Contains EpiCustomV2, Large_DatasetV2, EpiCustomV3, Large_DatasetV3 folders of data for training the model. 
 - *NER*: Contains the code to fine-tune BioBERT for NER. See internal README for details. 
 - *proof_of_concept*: Contains the output of *Case Study.ipynb*
 ### Other
