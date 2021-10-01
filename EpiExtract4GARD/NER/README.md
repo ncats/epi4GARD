@@ -1,7 +1,7 @@
 # Named Entity Recognition
 This code was adapted from the [Pytorch implementation of BioBERT](https://github.com/dmis-lab/biobert-pytorch) created by DMIS Lab. Every file except *preprocess.py* was modified. 
 
-Before training, please run `./preprocess.sh` to preprocess the datasets downloaded in `biobert-pytorch` (see [here](https://github.com/jhyuklee/biobert-pytorch)).
+Before training, please run `./preprocess.sh` to preprocess the datasets.
 
 To train an NER model with BioBERT-v1.1 (base), run the command below.
 
@@ -73,6 +73,3 @@ python3 run_ner.py \
 | outputCSTM4 | CustomV2 | 20     | 0.00005       | 0.01         | 16         | 1E-08        | 0.053693 | 0.888554  | 0.876672 | 0.882573 |
 | outputLG5   | LargeV2  | 30     | 0.00005       | 0.01         | 16         | 1E-08        | 0.055439 | 0.883756  | 0.881129 | 0.88244  |
 | outputCSTM5 | CustomV2 | 30     | 0.00005       | 0.01         | 16         | 1E-08        | 0.054413 | 0.891239  | 0.876672 | 0.883895 |
-
-## Contact
-For help or issues using BioBERT-PyTorch, please create an issue and tag [@minstar](https://github.com/minstar).
