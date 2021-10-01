@@ -1,5 +1,5 @@
 # Named Entity Recognition
-This code was adapted from the [Pytorch implementation of BioBERT](https://github.com/dmis-lab/biobert-pytorch) created by DMIS Lab. Every file except *preprocess.py* was modified. 
+This code was adapted from the [Pytorch implementation of BioBERT](https://github.com/dmis-lab/biobert-pytorch) created by DMIS Lab.
 
 Before training, please run `./preprocess.sh` to preprocess the datasets.
 
