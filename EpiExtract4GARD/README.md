@@ -1,18 +1,20 @@
 # EpiExtract4GARD
 # DOCUMENTATION PENDING
+This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature. The pipeline includes disease identification via dictionary look-up and identification of locations, epidemiological identifiers (e.g. "prevalence", "annual incidence", "estimated occurrence") and epidemiological rates (e.g. "1.7 per 1,000,000 live births" or 2.1:34,492) via BioBERT fine-tuned for named entity recognition (multi-type token classification).
 
-This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature. It integrates a transfomers model fine-tuned for named entity recognition with disease extraction via dictionary look-up. 
-fine-tune BioBERT for named entity recognition of three classes of epidemiological information, specifically 
 To see how it integrates with the entire epi4GARD alert system 
 
-
-This is the bidirectional NER system (multi-type token classification)
 ## Bi-Directional Transformer-based NER
 ### Key notebooks
 - *gather_pubs_per_disease.ipynb*: Generates *whole_abstract_set* and *positive_abstract_set.csv*. *whole_abstract_set* is a dataset created by sampling 500 rare disease names and their synonyms from *GARD.csv* until &ge;50 abstracts had been returned or the search results were exhausted. Although ~25,000 abstracts were expected, 7699 unique abstracts were returned due to the limited research on rare diseases. After running each of these through the LSTM RNN classifier, the *positive_abstract_set.csv* was created from the abstracts which had an epidemiological probability >50%. *positive_abstract_set.csv* will be passed to *create_labeled_dataset_V2.ipynb*
-- *create_labeled_dataset_V2.ipynb*: Uses [spaCy NER](https://spacy.io/usage/linguistic-features#named-entities) and rules I created iteratively to auto-label the dataset. Generates *EpiCustomV2_train.tsv*, *EpiCustomV2_train.tsv*, *EpiCustomV2_train.tsv* 
-- *compile_datasets.ipynb*: Combines the [CoNLL++ dataset](https://github.com/huggingface/datasets/tree/master/datasets/conllpp) with *EpiCustomV2_train.tsv*
-- *Analyze_dz_num_sample.ipynb*: Combines
+- *create_labeled_dataset_V2.ipynb*: Uses [spaCy NER](https://spacy.io/usage/linguistic-features#named-entities) and rules I created iteratively to auto-label the dataset. Generates *epi_{train,val,test}_setV2.tsv* files
+- *modify_existing_labels.ipynb*: Generated new rules for labeling that improved the V2 set to create V3.2 set. Input: *epi_{train, val, test}_setV2.tsv* files Output: *epi_{train, val, test}_setV3.tsv* files
+- *compile_datasets.ipynb*: Combines the [CoNLL++ dataset](https://github.com/huggingface/datasets/tree/master/datasets/conllpp) with *epi_train_setV3.tsv* to generate *training_setV3.tsv*. Also contains code to combine other datasets and train the models in notebook (did not work effectively) which were ultimately not used in this study.
+-*Case Study.ipynb*:
+- *Find efficacy of test predictions.ipynb*: 
+
+Orphanet_Comparison_Final.ipynb
+
 
 ### Data files
 - *whole_abstract_set.csv*: Contains 7699 unique abstracts (9284 total) that were returned from the EBI API call.
