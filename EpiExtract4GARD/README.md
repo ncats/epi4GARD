@@ -10,9 +10,9 @@ The final model is freely available to use on [Hugging Face](https://huggingface
 - *create_labeled_dataset_V2.ipynb*: Uses [spaCy NER](https://spacy.io/usage/linguistic-features#named-entities) and rules I created iteratively to auto-label the dataset. Generates *epi_{train,val,test}_setV2.tsv* files
 - *modify_existing_labels.ipynb*: Generated new rules for labeling that improved the V2 set to create V3.2 set. Input: *epi_{train, val, test}_setV2.tsv* files Output: *epi_{train, val, test}_setV3.tsv* files
 - *compile_datasets.ipynb*: Combines the [CoNLL++ dataset](https://github.com/huggingface/datasets/tree/master/datasets/conllpp) with *epi_train_setV3.tsv* to generate *training_setV3.tsv*. Also contains code to combine other datasets and train the models in notebook (did not work effectively) which were ultimately not used in this study. 
--*Case Study.ipynb*: Demonstrates the ability of the pipeline to search by disease or GARD ID and extract epidemiological information by utilizing *extract_abs.py* and *classify_abs.py*. Generates *proof_of_concept* folder. 
+- *Case Study.ipynb*: Demonstrates the ability of the pipeline to search by disease or GARD ID and extract epidemiological information by utilizing *extract_abs.py* and *classify_abs.py*. Generates *proof_of_concept* folder. 
 - *Find efficacy of test predictions.ipynb*: Contains the code to compare two datasets at the token- and entity-levels. Used to compare the unmodified test set to the manually validated test set (finds efficacy of programmatic labeling) and the model's test predictions to the manually validated test set (finds out precision, recall, and F1 score for each entity class).
-- *Orphanet_Comparison_Final.ipynb*:
+- *Orphanet_Comparison_Final.ipynb*: 
 
 ### Key Python Files
 - *extract_abs.py*: This is the workhorse of the pipeline. It can be imported into another notebook, python file, or run from the command line. Some key functions:
@@ -31,7 +31,7 @@ The final model is freely available to use on [Hugging Face](https://huggingface
 - *positive_abstract_set.csv*: Contains 620 unique abstracts (755 total) that were classified as epidemiological from the *whole_abstract_set.csv*
 - *epi_{train,val,test}_setV2.tsv* files: 
 - *epi_test_setV2-corrected.tsv*: The corrected dataset
-- *en_product9_prev.xml*: Contains the [Orphanet Data](http://www.orphadata.org/cgi-bin/epidemio.html) for the Case Study Comparison. This document was downloaded on August 31, 2021. 
+- *en_product9_prev.xml*: Contains the [Orphanet Data](http://www.orphadata.org/cgi-bin/epidemio.html) for the Case Study Comparison. This document was downloaded on August 31, 2021. ValMoy is epidemiologic rate per 100,000 persons. See [Orphanet's documentation](https://www.orpha.net/orphacom/cahiers/docs/GB/Epidemiology_in_Orphanet_R1_Ann_Epi_EP_05.pdf).
   - Use ```curl "http://www.orphadata.org/data/xml/en_product9_prev.xml" -o en_product9_prev.xml``` to download the file 
 - *gard-id-name-synonyms.json*: Contains the names and synonyms of all GARD diseases generated from a [neo4j knowledge graph](https://pubmed.ncbi.nlm.nih.gov/33183351/). Utilized in *extract_abs.py* for disease identification. 
 - *Orphanet-Comparison-FINAL.csv*: Contains the output of a large scale comparison to the Orphanet rare disease epidemiology database.
