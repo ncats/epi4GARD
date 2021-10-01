@@ -1,10 +1,10 @@
 # EpiExtract4GARD
 # DOCUMENTATION PENDING
 
-This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature
+This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature. It integrates a transfomers model fine-tuned for named entity recognition with disease extraction via dictionary look-up. 
 fine-tune BioBERT for named entity recognition of three classes of epidemiological information, specifically 
-This is based on the PyTorch implementation of 
-DMIS Lab
+To see how it integrates with the entire epi4GARD alert system 
+
 
 This is the bidirectional NER system (multi-type token classification)
 ## Bi-Directional Transformer-based NER
