@@ -11,7 +11,7 @@ To see how it integrates with the entire epi4GARD alert system [click here](http
 - *modify_existing_labels.ipynb*: Generated new rules for labeling that improved the V2 set to create V3.2 set. Input: *epi_{train, val, test}_setV2.tsv* files Output: *epi_{train, val, test}_setV3.tsv* files
 - *compile_datasets.ipynb*: Combines the [CoNLL++ dataset](https://github.com/huggingface/datasets/tree/master/datasets/conllpp) with *epi_train_setV3.tsv* to generate *training_setV3.tsv*. Also contains code to combine other datasets and train the models in notebook (did not work effectively) which were ultimately not used in this study.
 -*Case Study.ipynb*:
-- *Find efficacy of test predictions.ipynb*: 
+- *Find efficacy of test predictions.ipynb*: Contains the code to compare two datasets at the token- and entity-levels. Use to compare the unmodified 
 - *Orphanet_Comparison_Final.ipynb*:
 
 ### Key Python Files
@@ -23,6 +23,8 @@ To see how it integrates with the entire epi4GARD alert system [click here](http
 - *GARD.csv*: Contains the names and synonyms of all GARD diseases generated from a [neo4j knowledge graph](https://pubmed.ncbi.nlm.nih.gov/33183351/). *NOTE*: Contains errors due to the substitution of semicolons for commas to separate synonym names. Was utilized in *gather_pubs_per_disease.ipynb* and originally in *extract_abs.py* for disease identification, but that function is deprecated. Utilize *gard-id-name-synonyms.json* in future.
 - *whole_abstract_set.csv*: Contains 7699 unique abstracts (9284 total) that were returned from the EBI API call.
 - *positive_abstract_set.csv*: Contains 620 unique abstracts (755 total) that were classified as epidemiological from the *whole_abstract_set.csv*
+- *epi_{train,val,test}_setV2.tsv* files: 
+- *epi_test_setV2-corrected.tsv*: The corrected dataset
 - *en_product9_prev.xml*: Contains the [Orphanet Data](http://www.orphadata.org/cgi-bin/epidemio.html) for the Case Study Comparison. This document was downloaded on August 31, 2021. Use ```curl "http://www.orphadata.org/data/xml/en_product9_prev.xml" -o en_product9_prev.xml``` to download the file 
 - *gard-id-name-synonyms.json*: Contains the names and synonyms of all GARD diseases generated from a [neo4j knowledge graph](https://pubmed.ncbi.nlm.nih.gov/33183351/). Utilized in *extract_abs.py* for disease identification. 
 - *Orphanet-Comparison-FINAL.csv*: Contains the output of a large scale comparison to the Orphanet rare disease epidemiology database.
