@@ -1,7 +1,8 @@
 # EpiExtract4GARD
 # DOCUMENTATION PENDING
 
-This notebook contains the code to train BioBERT for named entity recognition of 
+This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature
+fine-tune BioBERT for named entity recognition of three classes of epidemiological information, specifically 
 This is based on the PyTorch implementation of 
 DMIS Lab
 
