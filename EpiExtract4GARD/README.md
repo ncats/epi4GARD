@@ -31,7 +31,8 @@ The final model is freely available to use on [Hugging Face](https://huggingface
 - *positive_abstract_set.csv*: Contains 620 unique abstracts (755 total) that were classified as epidemiological from the *whole_abstract_set.csv*
 - *epi_{train,val,test}_setV2.tsv* files: 
 - *epi_test_setV2-corrected.tsv*: The corrected dataset
-- *en_product9_prev.xml*: Contains the [Orphanet Data](http://www.orphadata.org/cgi-bin/epidemio.html) for the Case Study Comparison. This document was downloaded on August 31, 2021. Use ```curl "http://www.orphadata.org/data/xml/en_product9_prev.xml" -o en_product9_prev.xml``` to download the file 
+- *en_product9_prev.xml*: Contains the [Orphanet Data](http://www.orphadata.org/cgi-bin/epidemio.html) for the Case Study Comparison. This document was downloaded on August 31, 2021. 
+  - Use ```curl "http://www.orphadata.org/data/xml/en_product9_prev.xml" -o en_product9_prev.xml``` to download the file 
 - *gard-id-name-synonyms.json*: Contains the names and synonyms of all GARD diseases generated from a [neo4j knowledge graph](https://pubmed.ncbi.nlm.nih.gov/33183351/). Utilized in *extract_abs.py* for disease identification. 
 - *Orphanet-Comparison-FINAL.csv*: Contains the output of a large scale comparison to the Orphanet rare disease epidemiology database.
 ### Folders
@@ -40,3 +41,5 @@ The final model is freely available to use on [Hugging Face](https://huggingface
 - *UnusedCode*: Contains many of the my practice files, code, and options for training the model that were abandoned.
 ### Other
 - *Analyze_dz_num_sample.ipynb*: Analyzes the distribution of epidemiological articles returned from *gather_pubs_per_disease.ipynb*. Finds that 32.6  percent of diseases have 0 epidemiological studies and 96.6 percent of diseases have less than 5 epidemiological studies in this study. Generates *DiseaseSampleEpi_HistFINAL.png*. Previously generated *ArticlesPerDisease_Hist.2.png* which is the distribution of all articles returned from the search (many rare diseases have fewer than 50 articles returned when querying EBI API).
+- *Epi4GARD_test_set[CORRECTED].xlsx*: We input the programmatically labeled test set into a shared Google Sheet and validated it by manually correcting labels. The downloaded this Excel sheet for re-input into *.tsv* file
+- *xlsx2tsv.ipynb*: Converted *Epi4GARD_test_set[CORRECTED].xlsx* into *epi_test_setV2-corrected.tsv* because Excel cannot do it in the correct format.
