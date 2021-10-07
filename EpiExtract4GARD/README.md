@@ -19,7 +19,7 @@ The final model is freely available to use on [Hugging Face](https://huggingface
   - _init_NER_pipeline()_: Outputs a [huggingface tranformers pipeline variable](https://huggingface.co/transformers/main_classes/pipelines.html)
   - _get_diseases(sentence, GARD_dict, max_length)_: Checks every possible string combination in a sentence against the *GARD_dict* to find matches. Runs with time complexity O(*n*)
   - _autosearch(searchterm, GARD_dict)_: Allows searching by GARD ID (i.e. lemma) or any form of a disease name. Matches form to lemma and outputs a list of all other disease forms (synonyms)
-  - _search_term_extraction(search_term, model_variables)_: Input search term and the variables of both the transformer and LSTM RNN models and outputs a list of all related epidemiological abstracts with relevant information extracted from the text. See *Case Study.ipynb* for demo.
+  - _search_term_extraction(search_term, maxResults, model_variables)_: Input search term, maximum results wanted from the NCBI Entrez ESearch ("PubMed") and EBI APIs and the variables of both the transformer and LSTM RNN models and outputs a list of all related epidemiological abstracts with relevant information extracted from the text. See *Case Study.ipynb* for demo.
 - *classify_abs.py*: Optimized and added to [the original](https://github.com/ncats/epi4GARD#python-files). Some key functions:
   - _init_classify_model()_: Returns all of the variables needed for the LSTM RNN classification model. 
   - _search_getAbs(searchterm_list, maxResults)_: Allows one to search EBI and PubMed APIs for a search term(type = str) or a list of search terms. Returns a dictionary of {PMID : title+abstract}.
