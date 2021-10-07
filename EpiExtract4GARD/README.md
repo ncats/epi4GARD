@@ -15,7 +15,7 @@ The final model is freely available to use on [Hugging Face](https://huggingface
 
 ### Key Python Files
 - *extract_abs.py*: This is the workhorse of the pipeline. It can be imported into another notebook, python file, or run from the command line. Some key functions:
-  - _load_GARD_diseases()_: Outputs *GARD_dict*, a dictionary of form {disease name/synonym : GARD ID} and *max_length*, int that has the length of the longest series of words that comprises a rare disease name/synonym.
+  - _load_GARD_diseases()_: Outputs *GARD_dict*, a dictionary of form {disease name/synonym : GARD ID} and *max_length*, int that has the length of the longest series of words that comprises a rare disease name/synonym. Utilizes *gard-id-name-synonyms.json* to get this information.
   - _init_NER_pipeline()_: Outputs a [huggingface tranformers pipeline variable](https://huggingface.co/transformers/main_classes/pipelines.html)
   - _get_diseases(sentence, GARD_dict, max_length)_: Checks every possible string combination in a sentence against the *GARD_dict* to find matches. Runs with time complexity O(*n*)
   - _autosearch(searchterm, GARD_dict)_: Allows searching by GARD ID (i.e. lemma) or any form of a disease name. Matches form to lemma and outputs a list of all other disease forms (synonyms)
