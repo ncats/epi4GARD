@@ -1,5 +1,5 @@
 # Named Entity Recognition
-This code was adapted from the [Pytorch implementation of BioBERT](https://github.com/dmis-lab/biobert-pytorch) created by DMIS Lab.
+This code was adapted from the [Pytorch implementation of BioBERT](https://github.com/dmis-lab/biobert-pytorch) created by DMIS Lab. Training runs are saved at [Weights and Biases](https://wandb.ai/wzkariampuzha/huggingface?workspace=user-wzkariampuzha).
 
 Before training, please run `./preprocess.sh` to preprocess the datasets.
 
