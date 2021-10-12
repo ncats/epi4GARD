@@ -4,7 +4,6 @@ This notebook contains the code for a pipeline that can extract epidemiological 
 
 The final model is freely available to use on [Hugging Face](https://huggingface.co/ncats/EpiExtract4GARD). To see how it integrates with the entire epi4GARD alert system [click here](https://github.com/ncats/epi4GARD#epi4gard). 
 
-## Bi-Directional Transformer-based NER
 <h2 align="center">Bi-Directional Transformer-based NER</h2>
 
 ### Key notebooks
