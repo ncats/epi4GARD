@@ -48,7 +48,7 @@ class EpiSetConfig(datasets.BuilderConfig):
     """BuilderConfig for Conll2003"""
 
     def __init__(self, **kwargs):
-        """BuilderConfig forConll2003.
+        """BuilderConfig for Conll2003.
         Args:
           **kwargs: keyword arguments forwarded to super.
         """
@@ -59,7 +59,7 @@ class EpiSet(datasets.GeneratorBasedBuilder):
     """EpiSet4NER by GARD."""
 
     BUILDER_CONFIGS = [
-        EpiSetConfig(name="EpiSet4NER", version=datasets.Version("1.0.0"), description="EpiSet4NER by NIH NCATS GARD"),
+        EpiSetConfig(name="EpiSet4NER", version=datasets.Version("3.2"), description="EpiSet4NER by NIH NCATS GARD"),
     ]
 
     def _info(self):
