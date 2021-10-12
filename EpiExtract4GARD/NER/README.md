@@ -3,7 +3,7 @@ This code was adapted from the [Pytorch implementation of BioBERT](https://githu
 
 Before training, please run `./preprocess.sh` to preprocess the datasets.
 
-To train an NER model with BioBERT-v1.1 (base), run the command below with the raw datafiles. This was trained before EpiSet was added to [HuggingFace datasets](https://huggingface.co/datasets/ncats/EpiSet4NER)
+To train an NER model with BioBERT-v1.1 (base), run the command below with the raw datafiles. This was trained before EpiSet was added to [HuggingFace datasets.](https://huggingface.co/datasets/ncats/EpiSet4NER)
 
 ## Sample Training Commands
 ```bash
