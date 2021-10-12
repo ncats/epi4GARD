@@ -38,10 +38,10 @@ EpiSet4NER is a dataset generated from 620 rare disease abstracts labeled using 
 For more details see *INSERT PAPER* and https://github.com/ncats/epi4GARD/tree/master/EpiExtract4GARD#epiextract4gard
 """
 
-_URL = "https://github.com/NCATS/epi4GARD/tree/master/EpiExtract4GARD/datasets/EpiCustomV3"
-_TRAINING_FILE = "train.txt"
-_VAL_FILE = "val.txt"
-_TEST_FILE = "test.txt"
+_URL = "https://github.com/NCATS/epi4GARD/raw/master/EpiExtract4GARD/datasets/EpiCustomV3/"
+_TRAINING_FILE = "train.tsv"
+_VAL_FILE = "val.tsv"
+_TEST_FILE = "test.tsv"
 
 
 class EpiSetConfig(datasets.BuilderConfig):
@@ -52,7 +52,7 @@ class EpiSetConfig(datasets.BuilderConfig):
         Args:
           **kwargs: keyword arguments forwarded to super.
         """
-        super(ConllppConfig, self).__init__(**kwargs)
+        super(EpiSetConfig, self).__init__(**kwargs)
 
 
 class EpiSet(datasets.GeneratorBasedBuilder):
@@ -72,14 +72,13 @@ class EpiSet(datasets.GeneratorBasedBuilder):
                     "ner_tags": datasets.Sequence(
                         datasets.features.ClassLabel(
                             names=[
-                                "O",
-                                "B-EPI",
-                                "B-LOC",
-                                "B-STAT",
-                                "I-EPI",
-                                "I-LOC",
-                                "I-STAT",
-                                "O",
+                                "O", #(0)
+                                "B-LOC", #(1)
+                                "I-LOC", #(2)
+                                "B-EPI", #(3)
+                                "I-EPI", #(4)
+                                "B-STAT", #(5)
+                                "I-STAT", #(6)
                             ]
                         )
                     ),
@@ -124,7 +123,7 @@ class EpiSet(datasets.GeneratorBasedBuilder):
                         ner_tags = []
                 else:
                     # EpiSet tokens are space separated
-                    splits = line.split(" ")
+                    splits = line.split("\t")
                     tokens.append(splits[0])
                     ner_tags.append(splits[1].rstrip())
             # last example
