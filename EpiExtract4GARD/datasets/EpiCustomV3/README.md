@@ -9,14 +9,12 @@ An [example](https://pubmed.ncbi.nlm.nih.gov/24237863/) of 'train' looks as foll
     "ner_tags":  [0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 0, 5, 6, 0],
 }
 ```
-## Data Fields
+## Data Fields and Splits
 
 The data fields are the same among all splits.
 - `id`: a `string` feature that indicates sentence number.
 - `tokens`: a `list` of `string` features.
 - `ner_tags`: a `list` of classification labels, with possible values including `O` (0), `B-LOC` (1), `I-LOC` (2), `B-EPI` (3), `I-EPI` (4),`B-STAT` (5),`I-STAT` (6).
-
-## Data Splits
 
 |name |train |validation|test|
 |---------|-----:|----:|----:|
@@ -26,8 +24,13 @@ The data fields are the same among all splits.
 
 ## Dataset Creation
 <img src="https://raw.githubusercontent.com/ncats/epi4GARD/master/EpiExtract4GARD/datasets/EpiCustomV3/EpiSet%20Flowchart%20FINAL.png" height="650">  
+  
 **Figure 1:** Creation of EpiSet4NER by NIH/NCATS
 Comparing the programmatically labeled test set to the manually corrected test set allowed us to measure the precision, recall, and F1 of the programmatic labeling. 
+
+An example of the text labeling:
+![Text Labeling](https://raw.githubusercontent.com/ncats/epi4GARD/master/EpiExtract4GARD/datasets/EpiCustomV3/Text%20Labeling4.png)
+**Figure 2:** Text Labeling using spaCy and rule-based labeling. Ideal labeling is bolded on the left. Actual programmatic output is on the right. [\[Figure citation\]](https://pubmed.ncbi.nlm.nih.gov/33649778/)
 
 **Table 1:** Programmatic labeling of EpiSet4NER  
 
@@ -42,18 +45,11 @@ Comparing the programmatically labeled test set to the manually corrected test s
 |                  |    Epidemiologic Type    |   0.908   |  0.908 | 0.908 |
 |                  |    Epidemiologic Rate    |   0.739   |  0.645 | 0.689 |
 
-An example of the text labeling:
-![Text Labeling](https://raw.githubusercontent.com/ncats/epi4GARD/master/EpiExtract4GARD/datasets/EpiCustomV3/Text%20Labeling4.png)
-**Figure 2:** Text Labeling using spaCy and rule-based labeling. Ideal labeling is bolded on the left. Actual programmatic output is on the right. [\[Figure citation\]](https://pubmed.ncbi.nlm.nih.gov/33649778/)
-
-## Curation Rationale
+### Curation Rationale
 
 To train ML/DL models that automate the process of rare disease epidemiological curation. This is crucial information to patients & families, researchers, grantors, and policy makers, primarily for funding purposes. 
 
-## Source Data
-620 rare disease abstracts classified as epidemiological by a LSTM RNN rare disease epi classifier from 488 diseases. See Figure 1.
-
-## Initial Data Collection and Normalization
+### Initial Data Collection and Normalization
 
 A random sample of 500 disease names were gathered from a list of ~6061 rare diseases tracked by GARD until &ge;50 abstracts had been returned for each disease or the EBI RESTful API results were exhausted. Though we called ~25,000 abstracts from PubMed's db, only 7699 unique abstracts were returned for 488 diseases. Out of 7699 abstracts, only 620 were classified as epidemiological by the LSTM RNN epidemiological classifier.
 
@@ -74,11 +70,11 @@ None. These are freely available abstracts from PubMed.
 
 # Considerations for Using the Data
 
-## Social Impact of Dataset
+### Social Impact of Dataset
 
 Assisting 25-30 millions Americans with rare diseases. Additionally can be useful for Orphanet or CDC researchers/curators. 
 
-## Discussion of Biases and Limitations
+### Discussion of Biases and Limitations
 - There were errors in the source file that contained rare disease synonyms of names, which may have led to some unrelated abstracts being included in the training, validation, and test sets. 
 - The abstracts were gathered through the EBI API and is thus subject to any biases that the EBI API had. The NCBI API returns very different results as shown by an API analysis here.
 - The [long short-term memory recurrent neural network epi classifier](https://pubmed.ncbi.nlm.nih.gov/34457147/) was used to sift the 7699 rare disease abstracts. This model had a hold-out validation F1 score of 0.886 and a test F1 (which was compared against a GARD curator who used full-text articles to determine truth-value of epidemiological abstract) of 0.701. With 620 epi abstracts filtered from 7699 original rare disease abstracts, there are likely several false positives and false negative epi abstracts.
