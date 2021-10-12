@@ -1,8 +1,7 @@
 <h1 align="center">EpiExtract4GARD</h1>
 <h3 align="center">Weakly-Supervised Bidirectional Deep Learning Model for Epidemiological Entity Recognition</h3>
 This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature. The pipeline includes disease identification via dictionary look-up and identification of locations, epidemiological identifiers (e.g. "prevalence", "annual incidence", "estimated occurrence") and epidemiological rates (e.g. "1.7 per 1,000,000 live births", "2.1:1.000.000", "one in five million", "0.03%") via BioBERT fine-tuned for named entity recognition (multi-type token classification).
-
-
+\n
 The final model is freely available to use on [Hugging Face](https://huggingface.co/ncats/EpiExtract4GARD). To see how it integrates with the entire epi4GARD alert system [click here](https://github.com/ncats/epi4GARD#epi4gard). 
 
 <h2 align="center">Bi-Directional Transformer-based NER</h2>
