@@ -26,11 +26,11 @@ The data fields are the same among all splits.
 
 
 ## Dataset Creation
-![EpiSet Creation Flowchart](https://raw.githubusercontent.com/ncats/epi4GARD/master/EpiExtract4GARD/datasets/EpiCustomV3/EpiSet%20Flowchart%20FINAL.png)
-*Figure 1:* Creation of EpiSet4NER by NIH/NCATS
+<img src="https://raw.githubusercontent.com/ncats/epi4GARD/master/EpiExtract4GARD/datasets/EpiCustomV3/EpiSet%20Flowchart%20FINAL.png" height="650">  
+**Figure 1:** Creation of EpiSet4NER by NIH/NCATS
 Comparing the programmatically labeled test set to the manually corrected test set allowed us to measure the precision, recall, and F1 of the programmatic labeling. 
 
-*Table 1:* Programmatic labeling of EpiSet4NER  
+**Table 1:** Programmatic labeling of EpiSet4NER  
 
 | Evaluation Level |          Entity          | Precision | Recall |   F1  |
 |:----------------:|:------------------------:|:---------:|:------:|:-----:|
@@ -45,7 +45,7 @@ Comparing the programmatically labeled test set to the manually corrected test s
 
 An example of the text labeling:
 ![Text Labeling](https://raw.githubusercontent.com/ncats/epi4GARD/master/EpiExtract4GARD/datasets/EpiCustomV3/Text%20Labeling4.png)
-*Figure 2:* Text Labeling using spaCy and rule-based labeling. Ideal labeling is bolded on the left. Actual programmatic output is on the right. [\[Figure citation\]](https://pubmed.ncbi.nlm.nih.gov/33649778/)
+**Figure 2:** Text Labeling using spaCy and rule-based labeling. Ideal labeling is bolded on the left. Actual programmatic output is on the right. [\[Figure citation\]](https://pubmed.ncbi.nlm.nih.gov/33649778/)
 
 ### Curation Rationale
 
@@ -54,7 +54,7 @@ To train ML/DL models that automate the process of rare disease epidemiological 
 ### Source Data
 620 rare disease abstracts classified as epidemiological by a LSTM RNN rare disease epi classifier from 488 diseases. See Figure 1.
 
-#### Initial Data Collection and Normalization
+### Initial Data Collection and Normalization
 
 A random sample of 500 disease names were gathered from a list of ~6061 rare diseases tracked by GARD until &ge;50 abstracts had been returned for each disease or the EBI RESTful API results were exhausted. Though we called ~25,000 abstracts from PubMed's db, only 7699 unique abstracts were returned for 488 diseases. Out of 7699 abstracts, only 620 were classified as epidemiological by the LSTM RNN epidemiological classifier.
 
