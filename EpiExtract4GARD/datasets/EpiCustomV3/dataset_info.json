@@ -1,22 +1,27 @@
-{"conllpp": 
- {"description": "CoNLLpp is a corrected version of the CoNLL2003 NER dataset where labels of 5.38% of the sentences in the test set\nhave been manually corrected. The training set and development set are included for completeness.\nFor more details see https://www.aclweb.org/anthology/D19-1519/ and https://github.com/ZihanWangKi/CrossWeigh\n", 
-  "citation": "@inproceedings{wang2019crossweigh,\n  title={CrossWeigh: Training Named Entity Tagger from Imperfect Annotations},\n  author={Wang, Zihan and Shang, Jingbo and Liu, Liyuan and Lu, Lihao and Liu, Jiacheng and Han, Jiawei},\n  booktitle={Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)},\n  pages={5157--5166},\n  year={2019}\n}\n", 
-  "homepage": "https://github.com/ZihanWangKi/CrossWeigh", 
-  "license": "", 
+{"EpiSet4NER": 
+ {"description": "EpiSet4NER is a bronze-standard dataset for epidemiological entity recognition of location, epidemiologic types (e.g. 'prevalence', 'annual incidence', 'estimated occurrence'), and epidemiological rates (e.g. '1.7 per 1,000,000 live births', '2.1:1.000.000', 'one in five million', '0.03%') created by the Genetic and Rare Diseases Information Center (GARD), a program in the National Center for Advancing Translational Sciences, one of the 27 National Institutes of Health. It was labeled programmatically using spaCy NER and rule-based methods. This weakly-supervised teaching method allowed us to construct this imprecise dataset with minimal manual effort and achieve satisfactory performance on a multi-type token classification problem. The test set was manually corrected by 3 NCATS researchers and a GARD curator (genetic and rare disease expert). It was used to train EpiExtract4GARD, a BioBERT-based model fine-tuned for NER.\nFor more details see https://github.com/ncats/epi4GARD/tree/master/EpiExtract4GARD \n", 
+  "citation": "PENDING", 
+  "homepage": "https://github.com/ncats/epi4GARD/tree/master/EpiExtract4GARD#epiextract4gard", 
+  "license": null, 
   "features": {"id": {"dtype": "string", "id": null, "_type": "Value"}, 
   "tokens": {"feature": {"dtype": "string", "id": null, "_type": "Value"}, "length": -1, "id": null, "_type": "Sequence"}, 
-  "ner_tags": {"feature": {"num_classes": 9, "names": ["O", "B-PER", "I-PER", "B-ORG", "I-ORG", "B-LOC", "I-LOC", "B-MISC", "I-MISC"], "names_file": null, "id": null, "_type": "ClassLabel"}, "length": -1, "id": null, "_type": "Sequence"}}, 
-  "post_processed": null, 
-  "supervised_keys": null, 
-  "builder_name": "conllpp", 
-  "config_name": "conllpp", 
-  "version": {"version_str": "1.0.0", "description": null, "major": 1, "minor": 0, "patch": 0}, 
+  "ner_tags": {"feature": {"num_classes": 9, "names": [
+                                "O", #(0)
+                                "B-LOC", #(1)
+                                "I-LOC", #(2)
+                                "B-EPI", #(3)
+                                "I-EPI", #(4)
+                                "B-STAT", #(5)
+                                "I-STAT", #(6)
+                            ], "names_file": null, "id": null, "_type": "ClassLabel"}, "length": -1, "id": null, "_type": "Sequence"}}, 
+  "builder_name": "EpiSet", 
+  "config_name": "EpiSet", 
+  "version": {"version_str": "3.2", "description": null, "major": 1, "minor": 0, "patch": 0}, 
   "splits": {
-   "train": {"name": "train", "num_bytes": 6931393, "num_examples": 14041, "dataset_name": "conllpp"}, 
-   "validation": {"name": "validation", "num_bytes": 1739247, "num_examples": 3250, "dataset_name": "conllpp"}, 
-   "test": {"name": "test", "num_bytes": 1582078, "num_examples": 3453, "dataset_name": "conllpp"}}, 
-  "download_checksums": {"https://github.com/ZihanWangKi/CrossWeigh/raw/master/data/conllpp_train.txt": {"num_bytes": 3283420, "checksum": "213953b5522fb7924802d883e50f027b2c6ffb5d4d0e63368ed82909f9b60423"}, 
-                         "https://github.com/ZihanWangKi/CrossWeigh/raw/master/data/conllpp_dev.txt": {"num_bytes": 827443, "checksum": "c02eb19809eafb83998326a0481942eb37d96f31826ae387cfe8773699969f5b"}, 
-                         "https://github.com/ZihanWangKi/CrossWeigh/raw/master/data/conllpp_test.txt": {"num_bytes": 748737, "checksum": "4eb3b5114787d0df24087e9c9dfc956abf4cfd5e201bc1056b48ff4f7b37c0e8"}}, 
-  "dataset_size": 10252718, 
-  "size_in_bytes": 1,300,189}}
+   "train": {"name": "train", "num_abstracts": 456, "num_tokens": 117888, "dataset_name": "episet4ner"}, 
+   "validation": {"name": "validation","num_abstracts": 114, "num_tokens": 31262, "dataset_name": "episet4ner"}, 
+   "test": {"name": "test", "num_abstracts": 50, "num_tokens": 3453, "dataset_name": "episet4ner"}}, 
+  "dataset_abstracts": 620, 
+  "dataset_tokens": 163060, 
+  "size_in_bytes": 1300189}
+}
