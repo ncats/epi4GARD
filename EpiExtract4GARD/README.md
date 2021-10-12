@@ -1,10 +1,11 @@
 <h1 align="center">EpiExtract4GARD</h1>
-<h3 align="center">Weakly-Supervised Bidirectional Deep Learning Model for Epidemiological Entity Recognition</h5>
+<h3 align="center">Weakly-Supervised Bidirectional Deep Learning Model for Epidemiological Entity Recognition</h3>
 This notebook contains the code for a pipeline that can extract epidemiological information from rare disease literature. The pipeline includes disease identification via dictionary look-up and identification of locations, epidemiological identifiers (e.g. "prevalence", "annual incidence", "estimated occurrence") and epidemiological rates (e.g. "1.7 per 1,000,000 live births", "2.1:1.000.000", "one in five million", "0.03%") via BioBERT fine-tuned for named entity recognition (multi-type token classification). 
 
 The final model is freely available to use on [Hugging Face](https://huggingface.co/ncats/EpiExtract4GARD). To see how it integrates with the entire epi4GARD alert system [click here](https://github.com/ncats/epi4GARD#epi4gard). 
 
 ## Bi-Directional Transformer-based NER
+<h2 align="center">Bi-Directional Transformer-based NER</h2>
 ### Key notebooks
 - *gather_pubs_per_disease.ipynb*: Generates *whole_abstract_set.csv* and *positive_abstract_set.csv*. *whole_abstract_set.csv* is a dataset created by sampling 500 rare disease names and their synonyms from *GARD.csv* until &ge;50 abstracts had been returned or the search results were exhausted. Although ~25,000 abstracts were expected, 7699 unique abstracts were returned due to the limited research on rare diseases. After running each of these through the LSTM RNN classifier, the *positive_abstract_set.csv* was created from the abstracts which had an epidemiological probability >50%. *positive_abstract_set.csv* will be passed to *create_labeled_dataset_V2.ipynb*
 - *create_labeled_dataset_V2.ipynb*: Uses [spaCy NER](https://spacy.io/usage/linguistic-features#named-entities) and rules I created iteratively to auto-label the dataset. Generates *epi_{train,val,test}_setV2.tsv* files
