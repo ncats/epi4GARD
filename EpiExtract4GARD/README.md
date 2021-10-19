@@ -44,6 +44,7 @@ The [final model](https://huggingface.co/ncats/EpiExtract4GARD) and [dataset (Ep
 ### Other
 - *whole_abstract_set.csv*: Contains 7699 unique abstracts (9284 total) that were returned from the EBI API call.
 - *Analyze_dz_num_sample.ipynb*: Analyzes the distribution of epidemiological articles returned from *gather_pubs_per_disease.ipynb*. Finds that 32.6  percent of diseases have 0 epidemiological studies and 96.6 percent of diseases have less than 5 epidemiological studies in this study. Generates *DiseaseSampleEpi_HistFINAL.png*. Previously generated *ArticlesPerDisease_Hist.2.png* which is the distribution of all articles returned from the search (many rare diseases have fewer than 50 articles returned when querying EBI API).
+- *labeling for figure.ipynb*: Inputs one abstract and programmatically labels it so that an appropriate figure can be illustrated accurately in PowerPoint (separate).
 - *Epi4GARD_test_set[CORRECTED].xlsx*: We input the programmatically labeled test set into a shared Google Sheet and validated it by manually correcting labels. The downloaded this Excel sheet for re-input into *.tsv* file
 - *xlsx2tsv.ipynb*: Converted *Epi4GARD_test_set[CORRECTED].xlsx* into *epi_test_setV2-corrected.tsv* because Excel cannot do it in the correct format.
 - *API-Analysis.ipynb*: Analyzes the EBI RESTfuland NCBI (PubMed) APIs using the [Jaccard index](https://en.wikipedia.org/wiki/Jaccard_index). Also re-outputs an unmodified, but easier to manuallly search Orphanet data in csv. Generates *API-Analysis* folder and *All Orphanet Data.csv*. 
