@@ -1,0 +1,28 @@
+export SAVE_DIR=./results
+export DATASET=ncats/GARD_EpiSet4TextClassification
+export MODEL_NAME_PATH=dmis-lab/biobert-base-cased-v1.2
+export MAX_LENGTH=192
+export BATCH_SIZE=16
+export NUM_EPOCHS=2
+export SAVE_STEPS=5000
+export SEED=2
+export EPSILON=1e-8
+export WEIGHT_DECAY=0.05
+export LEARNING_RATE=3e-5
+
+python3 run_classify.py \
+  --model_name_or_path ${MODEL_NAME_PATH} \
+  --dataset_name ${DATASET} \
+  --max_seq_length ${MAX_LENGTH} \
+  --per_device_train_batch_size ${BATCH_SIZE} \
+  --save_steps ${SAVE_STEPS} \
+  --learning_rate ${LEARNING_RATE} \
+  --weight_decay ${WEIGHT_DECAY} \
+  --adam_epsilon ${EPSILON} \
+  --num_train_epochs ${NUM_EPOCHS} \
+  --output_dir ${SAVE_DIR} \
+  --seed ${SEED} \
+  --do_train \
+  --do_eval \
+  --do_predict \
+  --overwrite_output_dir
