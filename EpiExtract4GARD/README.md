@@ -1,5 +1,5 @@
 <h1 align="center">EpiExtract4GARD</h1>
-<h3 align="center">Weakly-Supervised Bidirectional Deep Learning Model for Epidemiological Entity Recognition</h3>  
+<h3 align="center">Bidirectional Transformers for Epidemiological Entity Recognition</h3>  
 
 This [notebook](https://github.com/ncats/epi4GARD/blob/master/EpiExtract4GARD/Case%20Study.ipynb) contains the code for a pipeline that can extract epidemiological information from rare disease literature. The pipeline includes disease identification via dictionary look-up and identification of locations, epidemiological identifiers (e.g. "prevalence", "annual incidence", "estimated occurrence") and epidemiological rates (e.g. "1.7 per 1,000,000 live births", "2.1:1.000.000", "one in five million", "0.03%") via BioBERT fine-tuned for named entity recognition (multi-type token classification).
   
