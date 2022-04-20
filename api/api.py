@@ -1,28 +1,53 @@
 from flask import Flask, request, jsonify, Blueprint, render_template
-from flask_restplus import Api, Resource, fields, reqparse
-from flask_cors import CORS, os
-from extract_abs import  search_term_extraction as extract
+#from flask_restplus import Api, Resource, fields, reqparse
+#from flask_cors import CORS, os
 
 app = Flask(__name__)
-api = Api(app, version='1.0', title='EPIforGARD API', validate=False)
+app.config["DEBUG"] = True
 
-app.register_blueprint(basic_endpoint)
+diseases = [
+	{'id': 6,
+	 'name': 'Acromesomelic dysplasia',
+	 'synonyms': 'Acromesomelic dwarfism'},
 
-model_input = api.model('User input:', {"PMID": fields.Integer(maximum=10)})
+	{'id': 7,
+	 'name': 'Acromicric dysplasia',
+	 'synonyms': 'Acromicric skeletal dysplasia'},
 
-@app.route('/epiapi', methods=['GET'])
+	{'id': 8,
+	 'name': 'Agnosia',
+	 'synonyms': 'Primary visual agnosia, Monomodal visual amnesia, Visual amnesia'},
+]
 
-class EPIAPI(Resource):
-	@api.response(model_input)
-	@api.expect(model_input)
-	def post(self):
-		parser = reqparse.RequestParser()
-		parser.add_argument('PMID', type=int)
-		args=parser.parse_args()
-		inp = int(args["PMID"])
-		result = extract(inp)
-		return jsonify({"primes": result})
+@app.route("/", methods=["GET"])
+def home():
+	return render_template('index.html')
+
+@app.route("/epiapi/v1/resources/diseases", methods=["GET"])
+def epiapi():
+	return jsonify(diseases)
+
+@app.route("/epiapi_id", methods=["GET"])
+def epiapi_id():
+	
+	# check if ID was given; if yes, assign to the id varioable
+	# if no, return an error message
+	if 'id' in request.args:
+		id = int(request.args['id'])
+	else:
+		return "Error: No valid input provided."
+
+	results = []
+
+	# check and match result that correspond to input id
+	for disease in diseases:
+		if disease['id']==id:
+			results.append(disease)
+	
+	return jsonify(results)
+
+app.run()
 
 
-if __name__ == '__main__':
-	app.run()
+
+
