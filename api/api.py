@@ -1,53 +1,59 @@
 from flask import Flask, request, jsonify, Blueprint, render_template
+#import nltk
+#nltk.download()
+#from test import search_getAbs3
+from classify_abs import search_getAbs
+from extract_abs import PMID_extraction, autosearch, search_term_extraction
 #from flask_restplus import Api, Resource, fields, reqparse
 #from flask_cors import CORS, os
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-diseases = [
-	{'id': 6,
-	 'name': 'Acromesomelic dysplasia',
-	 'synonyms': 'Acromesomelic dwarfism'},
+@app.route("/")
+def index():
+	return "This is Epi4Gard API."
 
-	{'id': 7,
-	 'name': 'Acromicric dysplasia',
-	 'synonyms': 'Acromicric skeletal dysplasia'},
+""" 
+# Testing script:
+@app.route("/searchPMid/<pmid>")
+def searchPMid(pmid):
+	search_getAbs2(pmid)
+	return("Testing:" + pmid)
+	#return jsonify(search_getAbs)
 
-	{'id': 8,
-	 'name': 'Agnosia',
-	 'synonyms': 'Primary visual agnosia, Monomodal visual amnesia, Visual amnesia'},
-]
+@app.route("/searchPMid/<pmid>/<result>")
+def searchPMid(pmid, result):
+	search_getAbs3(pmid, result)
+	return("Testing:" + pmid + result)
+"""
 
-@app.route("/", methods=["GET"])
-def home():
-	return render_template('index.html')
+@app.route("/searchPMid/<searchterm_list>/<maxResults>/<filtering>")
+def searchPMid(searchterm_list, maxResults, filtering):
+	search_getAbs(searchterm_list=[], maxResults=int, filtering=str)
+	return(searchterm_list + ", " + maxResults + ", " + filtering)
 
-@app.route("/epiapi/v1/resources/diseases", methods=["GET"])
-def epiapi():
-	return jsonify(diseases)
+@app.route("/extractPMid/<pmid>/<labels>/<GARD_dict>/max_length")
+def extractPMid(pmid, NER_pipeline, labels, GARD_dict, max_length):
+	PMID_extraction(pmid, NER_pipeline, labels, GARD_dict, max_length)
+	return(pmid + "," + labels + "," + GARD_dict)
+	#return jsonify(PMID_extraction.output_dict)
 
-@app.route("/epiapi_id", methods=["GET"])
-def epiapi_id():
-	
-	# check if ID was given; if yes, assign to the id varioable
-	# if no, return an error message
-	if 'id' in request.args:
-		id = int(request.args['id'])
-	else:
-		return "Error: No valid input provided."
+@app.route("/search/<searchterm>/<GARD_dict>")
+def search(searchterm, GARD_dict):
+	autosearch()
+	return(searchterm + "," + GARD_dict)
 
-	results = []
+@app.route("/search_extract/<searchterm>/<maxResults>/<filtering>/<NER_pipeline>/<labels>/<extract_diseases>/<GARD_dict>/<max_length>/<classify_model_vars>")
+def search_extract(search_term, maxResults, filering, 
+				   NER_pipeline, labels, extract_diseases, 
+				   GARD_dict, max_length, classify_model_vars):
+	search_term_extraction()
+	return(search_term + "," + maxResults + "," + filering + "," 
+	+ NER_pipeline + "," + labels + "," + extract_diseases + "," 
+	+ GARD_dict + "," + max_length + "," + classify_model_vars)
+	#return "Results of the search: "+str(search_term_extraction)
 
-	# check and match result that correspond to input id
-	for disease in diseases:
-		if disease['id']==id:
-			results.append(disease)
-	
-	return jsonify(results)
+
 
 app.run()
-
-
-
-
