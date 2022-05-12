@@ -1,0 +1,27 @@
+{"EpiSet4NER": 
+ {"description": "EpiSet4NER is a bronze-standard dataset for epidemiological entity recognition of location, epidemiologic types (e.g. 'prevalence', 'annual incidence', 'estimated occurrence'), and epidemiological rates (e.g. '1.7 per 1,000,000 live births', '2.1:1.000.000', 'one in five million', '0.03%') created by the Genetic and Rare Diseases Information Center (GARD), a program in the National Center for Advancing Translational Sciences, one of the 27 National Institutes of Health. It was labeled programmatically using spaCy NER and rule-based methods. This weakly-supervised teaching method allowed us to construct this imprecise dataset with minimal manual effort and achieve satisfactory performance on a multi-type token classification problem. The test set was manually corrected by 3 NCATS researchers and a GARD curator (genetic and rare disease expert). It was used to train EpiExtract4GARD, a BioBERT-based model fine-tuned for NER.\nFor more details see https://github.com/ncats/epi4GARD/tree/master/EpiExtract4GARD \n", 
+  "citation": "PENDING", 
+  "homepage": "https://github.com/ncats/epi4GARD/tree/master/EpiExtract4GARD#epiextract4gard", 
+  "license": null, 
+  "features": {"id": {"dtype": "string", "id": null, "_type": "Value"}, 
+  "tokens": {"feature": {"dtype": "string", "id": null, "_type": "Value"}, "length": -1, "id": null, "_type": "Sequence"}, 
+  "ner_tags": {"feature": {"num_classes": 9, "names": [
+                                "O", #(0)
+                                "B-LOC", #(1)
+                                "I-LOC", #(2)
+                                "B-EPI", #(3)
+                                "I-EPI", #(4)
+                                "B-STAT", #(5)
+                                "I-STAT", #(6)
+                            ], "names_file": null, "id": null, "_type": "ClassLabel"}, "length": -1, "id": null, "_type": "Sequence"}}, 
+  "builder_name": "EpiSet", 
+  "config_name": "EpiSet", 
+  "version": {"version_str": "3.2", "description": null, "major": 1, "minor": 0, "patch": 0}, 
+  "splits": {
+   "train": {"name": "train", "num_abstracts": 456, "num_tokens": 117888, "dataset_name": "episet4ner"}, 
+   "validation": {"name": "validation","num_abstracts": 114, "num_tokens": 31262, "dataset_name": "episet4ner"}, 
+   "test": {"name": "test", "num_abstracts": 50, "num_tokens": 3453, "dataset_name": "episet4ner"}}, 
+  "dataset_abstracts": 620, 
+  "dataset_tokens": 163060, 
+  "size_in_bytes": 1300189}
+}
