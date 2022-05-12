@@ -140,7 +140,8 @@ def parse_info(sentences:List[str], model_outputs:List[List[Union[Dict[str,str],
     for output in model_outputs:
         #This abstracts the labels so that models with different types and numbers of labels can be used.
         for label in labels:
-            output_dict[label]+=[entity_dict['word'] for entity_dict in output if entity_dict['entity_group'] ==label]
+                                #This sub removes the ## which denotes that the token is not at the beginning of a word
+            output_dict[label]+=[re.sub('##','',entity_dict['word']) for entity_dict in output if entity_dict['entity_group'] ==label]
                 
     if 'DIS' not in output_dict.keys() and extract_diseases:
         output_dict['DIS'] = []
@@ -197,7 +198,10 @@ def autosearch(searchterm:Union[str,int], GARD_dict:Dict[str,str], matching=2) -
         if 'gard:' in searchterm and len(searchterm)==12:
             searchterm = searchterm.replace('gard:','GARD:')
             l = [k for k,v in GARD_dict.items() if v==searchterm]
+            
             if len(l)>0:
+                #Sort by longest first, because 1) longer searches tend to yield more accurate results 2) for consistent searches, as dict is unordered
+                l.sort(reverse=True, key=lambda x:len(x))
                 print("SEARCH TERM MATCHED TO GARD DICTIONARY. SEARCHING FOR: ",l)
                 return l
         
@@ -209,6 +213,7 @@ def autosearch(searchterm:Union[str,int], GARD_dict:Dict[str,str], matching=2) -
             searchterm = 'GARD:'+'0'*(7-len(str(searchterm)))+str(searchterm)
             l = [k for k,v in GARD_dict.items() if v==searchterm]
             if len(l)>0:
+                l.sort(reverse=True, key=lambda x:len(x))
                 print("SEARCH TERM MATCHED TO GARD DICTIONARY. SEARCHING FOR: ",l)
                 return l
         
@@ -216,6 +221,7 @@ def autosearch(searchterm:Union[str,int], GARD_dict:Dict[str,str], matching=2) -
         #considers the GARD ID as the lemma, and the search term as one form. maps the form to the lemma and then uses that lemma to find all related forms in the GARD dict. 
         elif searchterm in GARD_dict.keys():
             l = [k for k,v in GARD_dict.items() if v==GARD_dict[searchterm]]
+            l.sort(reverse=True, key=lambda x:len(x))
             print("SEARCH TERM MATCHED TO GARD DICTIONARY. SEARCHING FOR: ",l)
             return l
         
