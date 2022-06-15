@@ -21,6 +21,7 @@ from epi_pipeline import (
     # all of these entitled API return JSON-compatible dictionary
     API_search_classification,
     API_search_extraction,
+    API_PMID_classification,
     #These run the extraction and classification models on free text
     API_text_classification,
     API_text_extraction,
@@ -87,7 +88,25 @@ tags_metadata = [
                                                ...]}`
         """,
         "externalDocs": {
-            "description": "**Publication:**",
+            "description": "Publication:",
+            "url":"https://pubmed.ncbi.nlm.nih.gov/34457147/",
+        },
+    },
+    {
+        "name": "get_rare_disease_epidemiology_abstracts_from_PubMed_ID",
+        "description": """Query any PubMed ID 
+        <br>
+        <br>
+        Gets abstracts from PubMed then classifies them as epidemiological or not. 
+        <br>
+        <br>
+        Returns JSON of form ```{'PMID':pmid, 
+                               'ABSTRACT':abstract, 
+                               'EPI_PROB':epi_prob, 
+                               'IsEpi':isEpi}```
+        """,
+        "externalDocs": {
+            "description": "Publication:",
             "url":"https://pubmed.ncbi.nlm.nih.gov/34457147/",
         },
     },
@@ -102,7 +121,7 @@ tags_metadata = [
         Execute one of the examples to see the format of the output.
         """,
         "externalDocs": {
-            "description": "Also see __User Interface:__",
+            "description": "Also see User Interface:",
             "url":"https://huggingface.co/spaces/ncats/EpiPipeline4RD",
         },
     },
@@ -236,6 +255,11 @@ async def get_rare_disease_abstracts(
     filtering = validate_filtering(filtering)
     
     return search_getAbs(searchterm_list, max_results, filtering)
+
+@app.get("/getEpiAbsPMID/term={PubMed_ID}", tags=["get_rare_disease_epidemiology_abstracts_from_PubMed_ID"])
+async def get_rare_disease_epidemiology_abstracts(PubMed_ID):
+    return API_PMID_classification(PubMed_ID, epi_classify)
+
 
 @app.get("/getEpiAbsRD/term={search_term}", tags=["get_rare_disease_epidemiology_abstracts"])
 async def get_rare_disease_epidemiology_abstracts(
