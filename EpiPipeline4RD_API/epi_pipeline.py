@@ -851,6 +851,11 @@ def API_search_classification(search_term:Union[int,str], maxResults:int,
         
     return results
 
+def API_PMID_classification(pmid:Union[int,str], epi_classify:Classify_Pipeline) ->  Dict[str,str]: 
+    text = PMID_getAb(pmid)
+    epi_prob, isEpi = epi_classify(text)
+    return {'PMID':pmid,'ABSTRACT':text, 'EPI_PROB':str(epi_prob), 'IsEpi':isEpi}
+
 def API_text_classification(text:str,epi_classify:Classify_Pipeline) ->  Dict[str,str]: 
     epi_prob, isEpi = epi_classify(text)
     return {'ABSTRACT':text, 'EPI_PROB':str(epi_prob), 'IsEpi':isEpi}
@@ -896,7 +901,7 @@ def search_term_extraction(search_term:Union[int,str], maxResults:int, filtering
     print(len(results),'abstracts classified as epidemiological.')
     return results.sort_values('EPI_PROB', ascending=False)
     
-#Returns a Pandas dataframe                                                                                                          
+#Returns a Pandas dataframe 
 def streamlit_extraction(search_term:Union[int,str], maxResults:int, filtering:str, #for abstract search
                            epi_ner:NER_Pipeline, #for biobert extraction 
                            GARD_Search:GARD_Search, extract_diseases:bool, #for disease extraction
@@ -1027,6 +1032,9 @@ def API_text_extraction(text:str, #Text to be extracted
     if extraction:
         #Re-order the dictionary into desired JSON output
         extraction = OrderedDict([(term, extraction[term]) for term in json_output if term in extraction.keys()])
+    else:
+        #This may return JSONs of different length than above
+        extraction = OrderedDict([(term, []) for term in json_output])
         
     return extraction
 
@@ -1034,7 +1042,7 @@ def API_text_classification_extraction(text:str, #Text to be extracted
                            epi_ner:NER_Pipeline, #for biobert extraction 
                            GARD_Search:GARD_Search, extract_diseases:bool, #for disease extraction
                            epi_classify:Classify_Pipeline) ->  Dict[str,str]:
-                                                                                                                  
+
     #Format of Output
     ordered_labels = order_labels(epi_ner.labels)
     if extract_diseases:
@@ -1056,7 +1064,11 @@ def API_text_classification_extraction(text:str, #Text to be extracted
         
         #Re-order the dictionary into desired JSON output
         output = OrderedDict([(term, extraction[term]) for term in json_output if term in extraction.keys()])
-        return output
+    else:
+        #This may return JSONs of different length than above
+        output = OrderedDict([(term, []) for term in json_output])
+        
+    return output
 
 ## Section: Deprecated Functions
 import requests
