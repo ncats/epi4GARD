@@ -1,7 +1,7 @@
 # epi4GARD
 
-[![LICENSE](https://img.shields.io/badge/license-NCATS-lightgray.svg)](LICENSE)
-[![ORGANIZATION](https://img.shields.io/badge/-NCATS-blueviolet)](https://ncats.nih.gov/)
+[![ORGANIZATION](https://img.shields.io/badge/-NCATS-5F3168)](https://ncats.nih.gov/)
+[![LICENSE](https://img.shields.io/badge/license-National%20Center%20for%20Advancing%20Translational%20Sciences-lightgrey)](LICENSE)
 [![CONTACT](https://img.shields.io/badge/contact-William.Kariampuzha%40nih.gov-blue)](mailto:William.Kariampuzha@nih.gov)
 
 The aim of this project for the [NIH Genetic and Rare Diseases Information Center (GARD)](https://rarediseases.info.nih.gov/) is to automatically identify rare disease articles as epidemiological, and if so, extract the epidemiological information from them. It is currently composed of two components:
