@@ -1,4 +1,5 @@
-![LOGO]()
+![LOGO](ncats.png)
+![LOGO](Logo_GARD_fullres.png)
 # epi4GARD
 [![ORGANIZATION](https://img.shields.io/badge/NIH-2F5486)](https://nih.gov/)
 [![ORGANIZATION](https://img.shields.io/badge/NCATS-5F3168)](https://ncats.nih.gov/)
