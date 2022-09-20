@@ -1,5 +1,7 @@
-![LOGO](ncats.png)
-![LOGO](Logo_GARD_fullres.png)
+<img src="ncats.png" alt="NCATS Logo" style="width:600px;" class="center">
+<br>
+<img src="Logo_GARD_fullres.png" alt="GARD Logo" style="width:500px;" class="center">
+
 # epi4GARD
 [![ORGANIZATION](https://img.shields.io/badge/NIH-2F5486)](https://nih.gov/)
 [![ORGANIZATION](https://img.shields.io/badge/NCATS-5F3168)](https://ncats.nih.gov/)
