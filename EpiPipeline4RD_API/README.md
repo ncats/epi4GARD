@@ -1,8 +1,5 @@
-## 5/17/22
-Accomplished:
-
-Next Steps:
-
+## 01/19/23
+It was running just fine but now is down. Working on fixes.
 
 ## 5/16/22
 Accomplished
