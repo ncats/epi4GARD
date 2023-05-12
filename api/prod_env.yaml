@@ -180,4 +180,3 @@ dependencies:
   - zipp=3.11.0=py310h06a4308_0
   - zlib=1.2.13=h5eee18b_0
   - zstd=1.5.5=hc292b87_0
-prefix: /home/wzkariampuzha/anaconda3/envs/epiapi-042823
