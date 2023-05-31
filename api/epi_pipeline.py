@@ -432,7 +432,7 @@ from torch import nn
 import numpy as np
 from unidecode import unidecode
 import re
-from transformers import BertConfig, AutoModelForTokenClassification, BertTokenizer, Trainer
+from transformers import BertConfig, AutoModelForTokenClassification, BertTokenizer, Trainer, TrainingArguments
 from collections import OrderedDict
 import json
 import pandas as pd
@@ -660,7 +660,13 @@ class NER_Pipeline:
         #model = AutoModelForTokenClassification.from_pretrained(name_or_path_to_model_folder)
         self.config = BertConfig.from_pretrained(name_or_path_to_model_folder)
         self.labels = {re.sub(".-","",label) for label in self.config.label2id.keys() if label != "O"}
-        self.trainer = Trainer(model=AutoModelForTokenClassification.from_pretrained(name_or_path_to_model_folder))
+        # Create the TrainingArguments object and set the batch size
+        training_args = TrainingArguments(
+            output_dir="./dummy_trainer",
+            per_device_eval_batch_size=16,
+            # other training arguments...
+            )
+        self.trainer = Trainer(model=AutoModelForTokenClassification.from_pretrained(name_or_path_to_model_folder),args=training_args)
     
     def __str__(self):
         return "Instantiation: pipe = NER_Pipeline(name_or_path_to_model_folder)"+"\n Calling: output_dict = pipe(text)"
