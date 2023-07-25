@@ -291,7 +291,10 @@ class Classify_Pipeline:
 ## Section: GARD SEARCH
 # can identify rare diseases in text using the GARD dictionary from neo4j
 # and map a GARD ID, name, or synonym to all of the related synonyms for searching APIs
+from typing import List, Dict, Union, Optional, Set, Tuple
 from nltk import tokenize as nltk_tokenize
+import requests
+
 class GARD_Search:
     def __init__(self):
         import json, codecs
@@ -304,7 +307,12 @@ class GARD_Search:
             diseases = json.loads(r.content)
         
         from nltk.corpus import stopwords
-        STOPWORDS = set(stopwords.words('english'))
+        try:
+            STOPWORDS = set(stopwords.words('english'))
+        except:
+            import nltk
+            nltk.download('stopwords')
+            STOPWORDS = set(stopwords.words('english'))
         
         #This should be a list of all GARD IDs for purposes like random choice for testing
         GARD_id_list = [entry['gard_id'] for entry in diseases]
@@ -336,6 +344,8 @@ class GARD_Search:
         return '''Instantiation: rd_identify = GARD_Search()
                   Calling: diseases, ids = rd_identify(text) 
                   Autosearch: search_terms = rd_identify.autosearch(searchterm)
+                  GARD ID List: rd_identify.GARD_id_list
+                  Disease Dictionary: rd_identify.GARD_dict
                '''
     
     def __call__(self, sentence:str) -> Tuple[List[str], List[str]]:
