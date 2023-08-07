@@ -10,6 +10,3 @@ COPY ./nltk_data /app/nltk_data
 COPY ./gard-id-name-synonyms.json /app
 COPY ./LICENSE /app
 COPY ./*.py /app
-
-#
-#CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]
