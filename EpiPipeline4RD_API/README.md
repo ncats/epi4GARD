@@ -1,3 +1,6 @@
+## 09/28/23
+This version of the epi extraction API is **deprecated**. Use [api](../api) folder instead.
+
 ## 01/19/23
 It was running just fine but now is down. Working on fixes.
 
