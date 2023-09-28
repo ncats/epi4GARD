@@ -13,3 +13,4 @@ The aim of this project for the [NIH Genetic and Rare Diseases Information Cente
  - A bidirectional transformer-based model that performs named entity recognition to identify epidemiological information from abstracts classified as epidemiological. (created by William Kariampuzha)
 
 The [EpiExtract4GARD folder](/EpiExtract4GARD#epiextract4gard) contains the entirety of the transformer-based NER model.
+The [api folder](./api) contains the API code and environments that runs the models.
