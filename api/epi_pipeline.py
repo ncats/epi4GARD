@@ -1,6 +1,4 @@
 from typing import List, Dict, Union, Optional, Set, Tuple
-from AlertCypher import AlertCypher
-import sysvars
 
 # coding=utf-8
 ##             PUBLIC DOMAIN NOTICE
@@ -301,12 +299,8 @@ class GARD_Search:
     def __init__(self):
         import json, codecs
         #These are opened locally so that garbage collection removes them from memory
-        try:
-            with codecs.open('gard_id_names_synonyms_2024.json', 'r', 'utf-8-sig') as f:
-                diseases = json.load(f)
-        except:
-            db = AlertCypher(sysvars.gard_db)
-            diseases = db.run('MATCH (x:GARD) RETURN x.GardId AS gard_id, x.GardName AS name, x.Synonyms AS synonyms').data()
+        with codecs.open('gard_id_names_synonyms_2024.json', 'r', 'utf-8-sig') as f:
+            diseases = json.load(f)
         
         from nltk.corpus import stopwords
         try:
