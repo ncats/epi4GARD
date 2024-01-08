@@ -9,12 +9,6 @@
 
 #Allows different inputs/outputs to be hinted in function definitions
 from typing import Union, Optional
-import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-r", "--root_path", dest="root_path", help="root path of epi api [DEFAULT = /api/epi]", default="/api/epi")
-parser.add_argument("-u", "--openapi_url", dest="openapi_url", help="OpenAPI url [DEFAULT = /api/epi/openapi.json]", default="/api/epi/openapi.json")
-args = parser.parse_args()
 
 #Epi Pipelines used
 from epi_pipeline import (
@@ -191,8 +185,8 @@ app = FastAPI(
     license_info={"name": "National Center for Advancing Translational Sciences License",
                   "url": "https://github.com/ncats/epi4GARD/blob/master/LICENSE"},
     openapi_tags=tags_metadata,
-    root_path=args.root_path,                       # needed for nginx proxy setting
-    openapi_url=args.openapi_url         # needed for docs when using a proxy
+    root_path="/api/epi",                       # needed for nginx proxy setting
+    openapi_url="/api/epi/openapi.json"         # needed for docs when using a proxy
     )
 # Pipelines
 rd_identify = GARD_Search()

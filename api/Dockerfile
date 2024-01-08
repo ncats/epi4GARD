@@ -7,6 +7,6 @@ RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 #
 COPY ./nltk_data /app/nltk_data
-COPY ./gard-id-name-synonyms.json /app
+COPY ./gard_id_names_synonyms_2024.json /app
 COPY ./LICENSE /app
 COPY ./*.py /app
