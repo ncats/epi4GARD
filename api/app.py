@@ -38,16 +38,7 @@ from pydantic import BaseModel
 ### CUSTOMIZATION OF SWAGGER UI
 ## See here for how to customize Swagger UI docs: https://fastapi.tiangolo.com/tutorial/metadata/#metadata-for-api
 description="""
-<p align="center">
-    <img src="https://github.com/ncats/epi4GARD/raw/master/ncats.png" alt="National Center for Advancing Translational Sciences Logo" width=600>
-    <br>
-    <br>
-    <img src="https://github.com/ncats/epi4GARD/raw/master/Logo_GARD_fullres.png" alt="NIH Genetic and Rare Diseases Information Center Logo" width=500>
-</p>
-
-This API was developed by the **[National Center for Advancing Translational Sciences (NCATS)](https://ncats.nih.gov/)** for the National Institutes of Health (NIH) **[Genetic and Rare Diseases Information Center (GARD)](https://rarediseases.info.nih.gov/)**.
-
-It allows one to _gather_ abstracts for a rare disease (query any rare disease name, synonym, or GARD ID) from two APIs, [_classify_ those abstracts as epidemiologic](https://pubmed.ncbi.nlm.nih.gov/34457147/), and _extract_ epidemiology information from them.
+This API allows one to _gather_ abstracts for a rare disease (query any rare disease name, synonym, or GARD ID) from two APIs, [_classify_ those abstracts as epidemiologic](https://pubmed.ncbi.nlm.nih.gov/34457147/), and [_extract_ epidemiology information from them](https://translational-medicine.biomedcentral.com/articles/10.1186/s12967-023-04011-y).
 
 A **full list of rare diseases** tracked by the NIH Genetic and Rare Diseases Information Center can be found [here](https://rarediseases.info.nih.gov/diseases/browse-by-first-letter).
 
