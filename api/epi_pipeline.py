@@ -1074,7 +1074,7 @@ def API_text_classification_extraction(text:str, #Text to be extracted
 
 ## Section: Deprecated Functions
 import requests
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 
 def search_Pubmed_API(searchterm_list:Union[List[str],str], maxResults:int) -> Dict[str,str]: #returns a dictionary of {pmids:abstracts} 
     print('search_Pubmed_API is DEPRECATED. UTILIZE search_NCBI_API for NCBI ENTREZ API results. Utilize search_getAbs for most comprehensive results.')
