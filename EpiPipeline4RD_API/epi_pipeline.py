@@ -13,7 +13,7 @@ from typing import List, Dict, Union, Optional, Set, Tuple
 
 ## Section: GATHER ABSTRACTS FROM APIs
 import requests
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 import nltk
 nltk.data.path.extend(["/home/user/app/nltk_data","./nltk_data"])
 from nltk.corpus import stopwords
