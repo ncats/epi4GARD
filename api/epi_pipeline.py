@@ -42,7 +42,13 @@ except:
     from nltk.corpus import stopwords
     STOPWORDS = set(stopwords.words('english'))
 
-from nltk import tokenize as nltk_tokenize
+#Punkt is a implicit requirement of nltk_tokenize that only fails at runtime, not instantiation
+try: 
+    nltk.data.find('tokenizers/punkt.zip')
+    from nltk import tokenize as nltk_tokenize
+except LookupError:
+    nltk.download('punkt')
+    from nltk import tokenize as nltk_tokenize
 
 #Retreives abstract and title (concatenated) from EBI API based on PubMed ID
 def PMID_getAb(PMID:Union[int,str]) -> str: 
