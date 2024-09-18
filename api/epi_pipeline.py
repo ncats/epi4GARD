@@ -305,12 +305,8 @@ class GARD_Search:
     def __init__(self):
         import json, codecs
         #These are opened locally so that garbage collection removes them from memory
-        try:
-            with codecs.open('gard-id-name-synonyms.json', 'r', 'utf-8-sig') as f:
-                diseases = json.load(f)
-        except:
-            r = requests.get('https://raw.githubusercontent.com/ncats/epi4GARD/master/EpiExtract4GARD/gard-id-name-synonyms.json')
-            diseases = json.loads(r.content)
+        with codecs.open('gard_id_names_synonyms_2024.json', 'r', 'utf-8-sig') as f:
+            diseases = json.load(f)
         
         from nltk.corpus import stopwords
         try:
@@ -694,7 +690,6 @@ class NER_Pipeline:
     @timeit
     def getTextExtraction(self, text:str, rd_identify:Union[GARD_Search,None] = None):
         output_dict = {label:[] for label in self.labels}
-        
         dataset = NerDataset(text, self.bert_tokenizer, self.config)
         predictions, label_ids, _ = self.trainer.predict(dataset)
         preds_list, _ = self.align_predictions(predictions, label_ids)
@@ -704,7 +699,7 @@ class NER_Pipeline:
         
         for sentence in dataset.ner_inputs:
             entity = []
-            for idx, (current, nxt) in enumerate(pairwise(sentence.labels)):    
+            for idx, (current, nxt) in enumerate(pairwise(sentence.labels)):
                 #Main concatenation algorithm
                 '''
                 Accounts for all variations of 
@@ -755,11 +750,13 @@ class NER_Pipeline:
                 output_dict[entity] = None
             elif entity !='STAT':
                 #remove duplicates from list but keep ordering instead of using sets
-                output = list(OrderedDict.fromkeys(output)) 
+                output = list(OrderedDict.fromkeys(output))
                 output_dict[entity] = output
-
-        if output_dict['EPI'] and output_dict['STAT']:
-            return output_dict
+        
+        for val in output_dict.values():
+            if val:
+                #if output_dict['EPI'] and output_dict['STAT']:
+                return output_dict
     
     def align_predictions(self, predictions: np.ndarray, label_ids: np.ndarray) -> Tuple[List[int], List[int]]:
         preds = np.argmax(predictions, axis=2)
@@ -1046,7 +1043,7 @@ def API_text_extraction(text:str, #Text to be extracted
     else:
         #This may return JSONs of different length than above
         extraction = OrderedDict([(term, []) for term in json_output])
-        
+    
     return extraction
 
 def API_text_classification_extraction(text:str, #Text to be extracted

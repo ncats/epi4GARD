@@ -185,6 +185,8 @@ app = FastAPI(
     license_info={"name": "National Center for Advancing Translational Sciences License",
                   "url": "https://github.com/ncats/epi4GARD/blob/master/LICENSE"},
     openapi_tags=tags_metadata,
+    root_path="/api/epi",                       # needed for nginx proxy setting
+    openapi_url="/api/epi/openapi.json"         # needed for docs when using a proxy
     )
 # Pipelines
 rd_identify = GARD_Search()
